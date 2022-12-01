@@ -91,6 +91,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 	protected JComboBox<String> StartAMPMCombo;
 	protected JComboBox<String> EndAMPMCombo;
 	
+	@SuppressWarnings("serial")
 	public MemAppInfoUI() {
 		super("MemAppInfoUI");
 		setSize(600, 800);

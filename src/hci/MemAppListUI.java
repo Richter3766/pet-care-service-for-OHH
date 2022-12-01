@@ -105,7 +105,29 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		AppTable.getColumn("신청 ID").setCellRenderer(celAlignCenter);
 		AppTable.getColumn("신청 기간").setCellRenderer(celAlignCenter);
 		AppTable.getColumn("신청 상태").setCellRenderer(celAlignCenter);
+		
+		
+		// 신청 ID 셀 크기 조정
+		AppTable.getColumn("신청 ID").setWidth(145);
+		AppTable.getColumn("신청 ID").setMinWidth(145);
+		AppTable.getColumn("신청 ID").setMaxWidth(145);
+				
+		// 신청 기간 셀 크기 조정
+		AppTable.getColumn("신청 기간").setWidth(250);
+		AppTable.getColumn("신청 기간").setMinWidth(250);
+		AppTable.getColumn("신청 기간").setMaxWidth(250);
+				
+		// 신청 상태 셀 크기 조정
+		AppTable.getColumn("신청 상태").setWidth(145);
+		AppTable.getColumn("신청 상태").setMinWidth(145);
+		AppTable.getColumn("신청 상태").setMaxWidth(145);
+		
+		// 셀 위치 변경 불가
 		AppTable.getTableHeader().setReorderingAllowed(false);
+		
+		// 셀 크기 변경 불가
+		AppTable.getTableHeader().setResizingAllowed(false);
+		
 		// 데이터가 화면 넘어갈 시 정렬
 		JScrollPane AppScroll = new JScrollPane(AppTable);
 		add(AppScroll);
