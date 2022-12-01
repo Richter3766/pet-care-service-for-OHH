@@ -54,9 +54,9 @@ public class ReviewUI extends JFrame implements ActionListener{
 	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
 	
 	// 리뷰를 위한 ID
-	int applicationID;
+	String applicationID;
 	
-	public ReviewUI(int applicationID) {
+	public ReviewUI(String applicationID) {
 		super("ReviewUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -155,8 +155,8 @@ public class ReviewUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			MemberUI MemberWindow = new MemberUI();
-			MemberWindow.setVisible(true);
+			MemAppListUI MemAppListWindow = new MemAppListUI();
+			MemAppListWindow.setVisible(true);
 			dispose();
 		}
 		else if(ActionCmd.equals("제출")) {
@@ -169,6 +169,9 @@ public class ReviewUI extends JFrame implements ActionListener{
 				// 신청완료된 신청을 가져온 다음 setReview
 				ApplicationList.getList().getForCompleteTable().get(this.applicationID).setReview(score, title, content);
 				ConfirmUI.showMessageDialog(null, score + title + content + "리뷰가 제출되었습니다","제출 완료");
+				MemberUI MemberWindow = new MemberUI();
+				MemberWindow.setVisible(true);
+				dispose();
 			}
 		}
 		else {
