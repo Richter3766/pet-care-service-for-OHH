@@ -4,8 +4,7 @@ import java.util.Hashtable;
 import java.util.ArrayList;
 
 import db.*;
-import pd.systemuser.PetSitter;
-import pd.systemuser.Pet;
+import pd.systemuser.*;
 
 public final class ApplicationList {
     private static final ApplicationList list = new ApplicationList();
@@ -19,7 +18,11 @@ public final class ApplicationList {
             ActiveTable.getInstance().getHashTable();                 // 진행중 테이블
     private final Hashtable<String, Application> forCompleteTable =
             CompleteTable.getInstance().getHashTable();             // 완료 테이블
-
+    private final Hashtable<String, Member> membertable =
+    		MemberTable.getInstance().getHashTable();
+    private final Hashtable<String, PetSitter> petsittertable =
+    		PetSitterTable.getInstance().getHashTable();
+    
     public static ApplicationList getList(){
         return list;
     }
@@ -40,8 +43,18 @@ public final class ApplicationList {
     public Hashtable<String, Application> getForCompleteTable() {
         return forCompleteTable;
     }
+    
+    public Member getMember(String UserID) {
+    	Member member = membertable.get(UserID);
+    	return member;
+    }
+    
+	public PetSitter getPetSitter(String UserID) {
+		PetSitter petsitter = petsittertable.get(UserID);
+		return petsitter;
+	}
 
-    /**
+	/**
      * 사용자 ID를 input 으로 받아
      * 상태가 "신청 대기"나 "결제 대기"에 있는 신청이 있는지 검사하고
      * 있으면 그 신청의 ID, 없으면 null 을 반환
