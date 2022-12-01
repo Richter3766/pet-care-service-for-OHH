@@ -15,7 +15,7 @@ public class ActiveTable
     private ActiveDM activeDM;
     
     private ActiveTable() {
-    	activeDM = new ActiveDM("ActiveTable");
+    	activeDM = new ActiveDM("Table/ActiveTable");
     	activehashtable = activeDM.readObjectData();
 		if(activehashtable == null)
 			activehashtable = new Hashtable<>();
