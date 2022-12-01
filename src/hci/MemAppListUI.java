@@ -133,7 +133,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		for(String key: list.getForPaymentTable().keySet()){
 			String temp = key.split("-")[0];
 			if(temp.compareTo("임시 ID") == 0){
-				application = list.getForAcceptTable().get(key);
+				application = list.getForPaymentTable().get(key);
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
 				data[1] = application.getPeriodOfService();
@@ -144,7 +144,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		for(String key: list.getForActiveTable().keySet()){
 			String temp = key.split("-")[0];
 			if(temp.compareTo("임시 ID") == 0){
-				application = list.getForAcceptTable().get(key);
+				application = list.getForActiveTable().get(key);
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
 				data[1] = application.getPeriodOfService();
@@ -155,7 +155,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		for(String key: list.getForCompleteTable().keySet()){
 			String temp = key.split("-")[0];
 			if(temp.compareTo("임시 ID") == 0){
-				application = list.getForAcceptTable().get(key);
+				application = list.getForCompleteTable().get(key);
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
 				data[1] = application.getPeriodOfService();
