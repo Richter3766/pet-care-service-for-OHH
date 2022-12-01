@@ -152,6 +152,39 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 					 AppModel.addRow(data);
 				}
 		}
+		for(String key: list.getForPaymentTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForPaymentTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
+		for(String key: list.getForActiveTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForActiveTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
+		for(String key: list.getForCompleteTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForCompleteTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
 //		String[] a = {"1234", "11월 29일", "결제 대기"};
 //		AppModel.addRow(a); // 데이터 추가
 		
@@ -214,7 +247,9 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		else if(ActionCmd.equals("리뷰")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"리뷰를 작성하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 리뷰 작성 수락
-				ReviewUI ReviewWindow = new ReviewUI();
+				// 선택된 신청의  ID를 ReviewUI로 넘겨줌
+				int applicationID = (int)AppTable.getValueAt( SelectedRow, 0);
+				ReviewUI ReviewWindow = new ReviewUI(applicationID);
 				ReviewWindow.setVisible(true);
 			}
 		}else if(ActionCmd.equals("결제")) {
@@ -223,6 +258,9 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		}else if(ActionCmd.equals("삭제")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 삭제하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 삭제하기
+				String applicationID = (String) AppTable.getValueAt(SelectedRow, 0);
+				ApplicationList list = ApplicationList.getList();
+				list.removeForAccept(applicationID);
 				AppModel.removeRow(SelectedRow);
 				/**
 				 * 이 부분에 신청 데이터베이스 정보 삭제하면 됨.
