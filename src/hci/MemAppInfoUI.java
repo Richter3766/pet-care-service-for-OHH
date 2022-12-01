@@ -160,6 +160,10 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 			DayString[i] = String.format("%02d", i+1);
 		}
 
+		String[] HourString = new String[12];
+		for(int i = 0;i<12;i++){
+			HourString[i] = String.format("%d", i+1);
+		}
 		StartYearNumLabel = new JLabel("2022");
 		ContentPanel.add(StartYearNumLabel);
 		StartYearNumLabel.setBounds(140,StartY,50,30);
@@ -198,7 +202,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		StartAMPMCombo.setBounds(360,StartY,70,30);
 		StartAMPMCombo.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
-		StartHourCombo = new JComboBox<>(YearString);
+		StartHourCombo = new JComboBox<>(HourString);
 		ContentPanel.add(StartHourCombo);
 		StartHourCombo.setBounds(430, StartY, 50, 30);
 		StartHourCombo.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -250,7 +254,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		EndAMPMCombo.setBounds(360,EndY,70,30);
 		EndAMPMCombo.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
-		EndHourCombo = new JComboBox<>(YearString);
+		EndHourCombo = new JComboBox<>(HourString);
 		ContentPanel.add(EndHourCombo);
 		EndHourCombo.setBounds(430, EndY, 50, 30);
 		EndHourCombo.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -410,11 +414,13 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 				String start = String.join(".", StartYearNumLabel.getText(),
 						Objects.requireNonNull(StartMonthCombo.getSelectedItem()).toString(),
 						Objects.requireNonNull(StartDayCombo.getSelectedItem()).toString(),
-						Objects.requireNonNull(StartHourCombo.getSelectedItem()).toString());
+						Objects.requireNonNull(StartAMPMCombo.getSelectedItem()).toString(),
+						Objects.requireNonNull(StartHourCombo.getSelectedItem()).toString() + "시");
 				String end = String.join(".", EndYearNumLabel.getText(),
 						Objects.requireNonNull(EndMonthCombo.getSelectedItem()).toString(),
 						Objects.requireNonNull(EndDayCombo.getSelectedItem()).toString(),
-						Objects.requireNonNull(EndHourCombo.getSelectedItem()).toString());
+						Objects.requireNonNull(EndAMPMCombo.getSelectedItem()).toString(),
+						Objects.requireNonNull(EndHourCombo.getSelectedItem()).toString() + "시");
 				application.setPeriodOfService(String.join(" ~ ", start, end));
 				application.setLocation(LocationField.getText());
 				System.out.println(application.getPeriodOfService());
