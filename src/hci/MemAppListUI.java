@@ -203,6 +203,9 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		}else if(ActionCmd.equals("삭제")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 삭제하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 삭제하기
+				String applicationID = (String) AppTable.getValueAt(SelectedRow, 0);
+				ApplicationList list = ApplicationList.getList();
+				list.removeForAccept(applicationID);
 				AppModel.removeRow(SelectedRow);
 				/**
 				 * 이 부분에 신청 데이터베이스 정보 삭제하면 됨.
