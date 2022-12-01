@@ -12,6 +12,8 @@ public class Application {
     static private int idIdx;                   // 신청 ID 생성을 위한 int 변수, 1씩 증가함
     private String petSitterID;					// 돌봄이의 정보를 열람하려면 회원에게 돌봄이 ID를 전달해야하는데 그 경로로 신청정보가 적합할 것 같아 돌봄이 ID 변수 추가
     String[] stateList = {"수락 대기", "결제 대기", "진행중", "완료"};
+    // review 추가
+    private String[] review = {"", "", ""};
 	
 	public Application(){
         this.applicationID = "";
@@ -48,6 +50,12 @@ public class Application {
     public void setPetSitterID(String petSitterID) {
 		this.petSitterID = petSitterID;
 	}
+    // 리뷰신청
+    public void setReview(String score, String title, String content) {
+    	this.review[0] = score;
+    	this.review[1] = title;
+    	this.review[2] = content;
+    }
 
 // getter
 
@@ -75,7 +83,9 @@ public class Application {
     public String getPetSitterID() {
 		return petSitterID;
 	}
-
+    public String[] getReview() {
+    	return review;
+    }
     /**
      * 신청 정보를 신청 목록에 등록한다
      * 1. 신청 목록에 중복된 정보가 있으면 중복된 신청 ID 반환

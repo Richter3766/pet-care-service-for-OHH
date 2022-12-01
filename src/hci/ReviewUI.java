@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+
+import pd.application.ApplicationList;
+
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 
@@ -50,7 +53,10 @@ public class ReviewUI extends JFrame implements ActionListener{
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
 	
-	public ReviewUI() {
+	// 리뷰를 위한 ID
+	int applicationID;
+	
+	public ReviewUI(int applicationID) {
 		super("ReviewUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,6 +147,9 @@ public class ReviewUI extends JFrame implements ActionListener{
 		SubmitButton.setBounds(450, 680, 100, 50);
 		SubmitButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		SubmitButton.addActionListener(this);
+		
+		// ID초기화
+		this.applicationID = applicationID;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -153,7 +162,13 @@ public class ReviewUI extends JFrame implements ActionListener{
 		else if(ActionCmd.equals("제출")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"리뷰를 제출하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 리뷰 제출 수락
-				ConfirmUI.showMessageDialog(null,"리뷰가 제출되었습니다","제출 완료");
+				String score, title, content;
+				score = (String)ReviewCombo.getSelectedItem();
+				title = ReviewTitleField.getText();
+				content = ReviewArea.getText();
+				// 신청완료된 신청을 가져온 다음 setReview
+				ApplicationList.getList().getForCompleteTable().get(this.applicationID).setReview(score, title, content);
+				ConfirmUI.showMessageDialog(null, score + title + content + "리뷰가 제출되었습니다","제출 완료");
 			}
 		}
 		else {
