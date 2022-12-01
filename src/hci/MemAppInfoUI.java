@@ -413,6 +413,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 				String isRedundant;
 				String services = "";
 
+				// 시간 저장
 				String start = String.join(".", StartYearNumLabel.getText(),
 						Objects.requireNonNull(StartMonthCombo.getSelectedItem()).toString(),
 						Objects.requireNonNull(StartDayCombo.getSelectedItem()).toString(),
@@ -424,8 +425,11 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 						Objects.requireNonNull(EndAMPMCombo.getSelectedItem()).toString(),
 						Objects.requireNonNull(EndHourCombo.getSelectedItem()).toString() + "시");
 				application.setPeriodOfService(String.join(" ~ ", start, end));
+
+				// 위치 저장
 				application.setLocation(LocationField.getText());
-				System.out.println(application.getPeriodOfService());
+
+				// 서비스 종류
 				if(ServiceCheck1.isSelected()){
 					services = services + ServiceCheck1.getText().split(" ")[0];
 				}
@@ -442,12 +446,17 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 					services = services + ServiceCheck3.getText().split(" ")[0];
 				}
 				application.setKindOfServices(services);
+
+				// 가격 저장
 				application.setPrice(PriceField.getText());
+
 				// 회원 아이디를 얻는 법 필요
 				application.setApplicationID("임시 ID");
 
+				// 중복 정보가 있어 대체해야할 경우
+				int doYouReplace = 0;
 				if((isRedundant = application.requestApplication()) != null){
-					int doYouReplace = ConfirmUI.showConfirmDialog(this,
+					doYouReplace = ConfirmUI.showConfirmDialog(this,
 							"신청이 존재합니다.\n대체하시겠습니까?","확인 메세지",
 							ConfirmUI.YES_NO_OPTION);
 					if(doYouReplace == 0){
@@ -459,7 +468,11 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 						dispose();
 					}
 				}
-				ConfirmUI.showMessageDialog(this,"신청이 완료되었습니다","신청 완료");
+
+				// 신청 완료
+				if(doYouReplace == 0){
+					ConfirmUI.showMessageDialog(this,"신청이 완료되었습니다","신청 완료");
+				}
 				MemberUI MemberWindow = new MemberUI();
 				MemberWindow.setVisible(true);
 				dispose();
