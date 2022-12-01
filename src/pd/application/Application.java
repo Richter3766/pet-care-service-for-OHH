@@ -1,7 +1,5 @@
 package pd.application;
 
-import java.util.Scanner;
-
 public class Application {
     private String applicationID;               // 신청 ID        형태: "userId-idIdx"
     private String periodOfService;             // 이용 시간
@@ -95,7 +93,7 @@ public class Application {
         ApplicationList list = ApplicationList.getList();
         String redundantID;
 
-        redundantID = list.isExistInPresent(this.getUserID());
+        redundantID = list.isExistInForAccept(this.getUserID());
 
         // redundantID 가 null 이 아니면 redundantID 반환
         if(redundantID != null){
@@ -103,16 +101,16 @@ public class Application {
         }
         // 중복 정보가 없으면 신청 등록
         this.setState(0);
-        list.addToPresent(this);
+        list.addForAccept(this);
         return null;
     }
 
     /**
-     * 신청 목록에 있는 중복 정보 삭제를 요청한다
+     * 수락대기 상태에 있는 중복 정보 삭제를 요청한다
      * @param redundantID 삭제할 신청 정보 ID
      */
     public void requestReplaceApplication(String redundantID){
         ApplicationList list = ApplicationList.getList();
-        list.removeFromPresent(redundantID);
+        list.removeForAccept(redundantID);
     }
 }
