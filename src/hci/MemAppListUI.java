@@ -130,6 +130,39 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 					 AppModel.addRow(data);
 				}
 		}
+		for(String key: list.getForPaymentTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForAcceptTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
+		for(String key: list.getForActiveTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForAcceptTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
+		for(String key: list.getForCompleteTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForAcceptTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
 //		String[] a = {"1234", "11월 29일", "결제 대기"};
 //		AppModel.addRow(a); // 데이터 추가
 		
