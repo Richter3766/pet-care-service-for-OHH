@@ -192,7 +192,9 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		else if(ActionCmd.equals("리뷰")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"리뷰를 작성하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 리뷰 작성 수락
-				ReviewUI ReviewWindow = new ReviewUI();
+				// 선택된 신청의  ID를 ReviewUI로 넘겨줌
+				int applicationID = (int)AppTable.getValueAt( SelectedRow, 0);
+				ReviewUI ReviewWindow = new ReviewUI(applicationID);
 				ReviewWindow.setVisible(true);
 			}
 		}else if(ActionCmd.equals("결제")) {
