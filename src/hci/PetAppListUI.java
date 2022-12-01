@@ -204,7 +204,9 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 신청을 취소하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 신청 취소하기
 				String applicationID = (String) AppTable.getValueAt(SelectedRow, 0);
-				list.removeForAccept(applicationID);
+				Application application = list.getForAcceptTable().get(applicationID);
+				list.moveForPaymentToAccept(applicationID);
+
 				AppModel.removeRow(SelectedRow);
 				ConfirmUI.showMessageDialog(this,"신청이 취소되었습니다","신청 취소 완료");
 				LookupButton.setVisible(false);

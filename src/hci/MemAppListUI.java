@@ -279,6 +279,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 				String applicationID = (String) AppTable.getValueAt(SelectedRow, 0);
 				ApplicationList list = ApplicationList.getList();
 				list.removeForAccept(applicationID);
+				list.removeForPayment(applicationID);
 				AppModel.removeRow(SelectedRow);
 				/**
 				 * 이 부분에 신청 데이터베이스 정보 삭제하면 됨.

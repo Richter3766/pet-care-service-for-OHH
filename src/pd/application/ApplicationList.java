@@ -47,7 +47,6 @@ public final class ApplicationList {
      * @param userID 사용자 ID
      * @return key or null
      */
-    
     public String isExistInForAccept(String userID){
         for(String key:forAcceptTable.keySet()){
             if(key.split("-")[0].compareTo(userID) == 0){
@@ -60,6 +59,12 @@ public final class ApplicationList {
     //생성한 application Table에 추가
     public void addForAccept(Application application){
         forAcceptTable.put(application.getApplicationID(), application);
+    }
+    public void moveForPaymentToAccept(String applicationID){
+        Application application = forPaymentTable.get(applicationID);
+        forPaymentTable.remove(applicationID);
+        application.setState(0);
+        forAcceptTable.put(applicationID, application);
     }
     //forAcceptTable에서 forPaymentTable로 이동
     public void moveForPayment(String applicationID) {
