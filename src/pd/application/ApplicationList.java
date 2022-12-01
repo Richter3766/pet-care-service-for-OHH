@@ -18,10 +18,6 @@ public final class ApplicationList {
             ActiveTable.getInstance().getHashTable();                 // 진행중 테이블
     private final Hashtable<String, Application> forCompleteTable =
             CompleteTable.getInstance().getHashTable();             // 완료 테이블
-    private final Hashtable<String, Member> membertable =
-    		MemberTable.getInstance().getHashTable();
-    private final Hashtable<String, PetSitter> petsittertable =
-    		PetSitterTable.getInstance().getHashTable();
     
     public static ApplicationList getList(){
         return list;
@@ -43,16 +39,6 @@ public final class ApplicationList {
     public Hashtable<String, Application> getForCompleteTable() {
         return forCompleteTable;
     }
-    
-    public Member getMember(String UserID) {
-    	Member member = membertable.get(UserID);
-    	return member;
-    }
-    
-	public PetSitter getPetSitter(String UserID) {
-		PetSitter petsitter = petsittertable.get(UserID);
-		return petsitter;
-	}
 
 	/**
      * 사용자 ID를 input 으로 받아
