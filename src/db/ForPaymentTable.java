@@ -15,7 +15,7 @@ public class ForPaymentTable
     private ForPaymentDM forpaymentDM;
     
     private ForPaymentTable() {
-    	forpaymentDM = new ForPaymentDM("ForPaymentTable");
+    	forpaymentDM = new ForPaymentDM("Table/ForPaymentTable");
     	forpaymenthashtable = forpaymentDM.readObjectData();
 		if(forpaymenthashtable == null)
 			forpaymenthashtable = new Hashtable<>();

@@ -8,7 +8,7 @@ public class Pet {
     private String kindOfFeed;              // 사료의 종류
 
 	// init
-    public Pet(String petName, int petAge, String petKind, String chronicDisease, String kindOfFeed, String userID){
+    public Pet(String petName, int petAge, String petKind, String chronicDisease, String kindOfFeed){
         setPetName(petName);
         setPetAge(petAge);
         setPetKind(petKind);
