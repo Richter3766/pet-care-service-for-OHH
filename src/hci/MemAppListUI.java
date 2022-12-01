@@ -42,6 +42,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 	RoundedButton ReviewButton;
 	RoundedButton PayButton;
 	RoundedButton RemoveButton;
+	RoundedButton LookupButton;
 	
 	int SelectedRow;
 	Color c;
@@ -58,6 +59,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
 	
+	ApplicationList list;
 	
 	public MemAppListUI() {
 		super("MemAppListUI");
@@ -108,19 +110,19 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		
 		
 		// 신청 ID 셀 크기 조정
-		AppTable.getColumn("신청 ID").setWidth(145);
-		AppTable.getColumn("신청 ID").setMinWidth(145);
-		AppTable.getColumn("신청 ID").setMaxWidth(145);
+		AppTable.getColumn("신청 ID").setWidth(130);
+		AppTable.getColumn("신청 ID").setMinWidth(130);
+		AppTable.getColumn("신청 ID").setMaxWidth(130);
 				
 		// 신청 기간 셀 크기 조정
-		AppTable.getColumn("신청 기간").setWidth(250);
-		AppTable.getColumn("신청 기간").setMinWidth(250);
-		AppTable.getColumn("신청 기간").setMaxWidth(250);
+		AppTable.getColumn("신청 기간").setWidth(280);
+		AppTable.getColumn("신청 기간").setMinWidth(280);
+		AppTable.getColumn("신청 기간").setMaxWidth(280);
 				
 		// 신청 상태 셀 크기 조정
-		AppTable.getColumn("신청 상태").setWidth(145);
-		AppTable.getColumn("신청 상태").setMinWidth(145);
-		AppTable.getColumn("신청 상태").setMaxWidth(145);
+		AppTable.getColumn("신청 상태").setWidth(130);
+		AppTable.getColumn("신청 상태").setMinWidth(130);
+		AppTable.getColumn("신청 상태").setMaxWidth(130);
 		
 		// 셀 위치 변경 불가
 		AppTable.getTableHeader().setReorderingAllowed(false);
@@ -139,7 +141,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		 *
 		* for 문으로 해시 테이블에 있는 값 추가
 		* */
-		ApplicationList list = ApplicationList.getList();
+		list = ApplicationList.getList();
 		Application application;
 		for(String key: list.getForAcceptTable().keySet()){
 			String temp = key.split("-")[0];
@@ -232,7 +234,17 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		RemoveButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		RemoveButton.addActionListener(this);	
 		RemoveButton.setVisible(false);
-				
+		
+		// 조회 버튼
+		LookupButton = new RoundedButton("조회");
+		add(LookupButton);
+		c = new Color(64,126,219);
+		LookupButton.setBackground(c);
+		LookupButton.setForeground(Color.WHITE);
+		LookupButton.setBounds(330, 680, 100, 50);
+		LookupButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		LookupButton.setVisible(false);
+		LookupButton.addActionListener(this);
 		
 	}
 	
@@ -248,13 +260,19 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 			int ans = ConfirmUI.showConfirmDialog(this,"리뷰를 작성하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 리뷰 작성 수락
 				// 선택된 신청의  ID를 ReviewUI로 넘겨줌
-				int applicationID = (int)AppTable.getValueAt( SelectedRow, 0);
+				String applicationID = (String) AppTable.getValueAt( SelectedRow, 0);
 				ReviewUI ReviewWindow = new ReviewUI(applicationID);
 				ReviewWindow.setVisible(true);
+				dispose();
 			}
 		}else if(ActionCmd.equals("결제")) {
-			//ReviewUI ReviewWindow = new ReviewUI();
-			//ReviewWindow.setVisible(true);
+			int ans = ConfirmUI.showConfirmDialog(this,"결제 창으로 이동하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
+			if(ans == 0){ // 결제창 이동
+				String applicationID = (String) AppTable.getValueAt( SelectedRow, 0);
+				PaymentUI PaymentWindow = new PaymentUI(applicationID);
+				PaymentWindow.setVisible(true);
+				dispose();
+			}
 		}else if(ActionCmd.equals("삭제")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 삭제하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 삭제하기
@@ -268,8 +286,13 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 				ReviewButton.setVisible(false);
 				PayButton.setVisible(false);
 				RemoveButton.setVisible(false);
+				LookupButton.setVisible(false);
 				ConfirmUI.showMessageDialog(this,"삭제가 완료되었습니다.","확인 메세지");
 			}
+		}else if(ActionCmd.equals("조회")) {
+			String applicationID = (String)AppTable.getValueAt(SelectedRow, 0); // Key(신청 ID) 얻어오기
+			MemAppDetailUI MemAppDetailWindow = new MemAppDetailUI(applicationID); // 상세정보 창 열기
+			MemAppDetailWindow.setVisible(true);
 		}
 		else {
 			System.out.println("Unexpected Error");
@@ -284,22 +307,36 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 			 PayButton.setVisible(false);
 			 ReviewButton.setVisible(false);
 			 RemoveButton.setVisible(true);
-			 PayButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setVisible(true);
+			 RemoveButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setBounds(330, 680, 100, 50);
 		 }else if(Status.equals("결제 대기")) {
 			 ReviewButton.setVisible(false);
 			 RemoveButton.setVisible(true);
 			 PayButton.setVisible(true);
-			 PayButton.setBounds(330, 680, 100, 50);
-		 }else if(Status.equals("완료")) {
+			 LookupButton.setVisible(true);
+			 PayButton.setBounds(210, 680, 100, 50);
+			 RemoveButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setBounds(330, 680, 100, 50);
+		 }else if(Status.equals("진행중")) {
+			 ReviewButton.setVisible(false);
+			 PayButton.setVisible(false);
+			 RemoveButton.setVisible(false);
+			 LookupButton.setVisible(true);
+			 PayButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setBounds(450, 680, 100, 50);
+		}else if(Status.equals("완료")) {
 			 RemoveButton.setVisible(false);
 			 PayButton.setVisible(false);
 			 ReviewButton.setVisible(true);
+			 LookupButton.setVisible(true);
 			 PayButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setBounds(330, 680, 100, 50);
 		 }else {
 			 ReviewButton.setVisible(false);
 			 PayButton.setVisible(false);
 			 RemoveButton.setVisible(false);
-			 PayButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setVisible(false);
 		 }
 	 }
 

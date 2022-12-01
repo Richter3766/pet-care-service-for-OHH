@@ -109,19 +109,19 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		AppTable.getColumn("가격").setCellRenderer(celAlignCenter);
 		
 		// 지역 셀 크기 조정
-		AppTable.getColumn("지역").setWidth(145);
-		AppTable.getColumn("지역").setMinWidth(145);
-		AppTable.getColumn("지역").setMaxWidth(145);
+		AppTable.getColumn("지역").setWidth(130);
+		AppTable.getColumn("지역").setMinWidth(130);
+		AppTable.getColumn("지역").setMaxWidth(130);
 		
 		// 신청 기간 셀 크기 조정
-		AppTable.getColumn("신청 기간").setWidth(250);
-		AppTable.getColumn("신청 기간").setMinWidth(250);
-		AppTable.getColumn("신청 기간").setMaxWidth(250);
+		AppTable.getColumn("신청 기간").setWidth(280);
+		AppTable.getColumn("신청 기간").setMinWidth(280);
+		AppTable.getColumn("신청 기간").setMaxWidth(280);
 		
 		// 가격 셀 크기 조정
-		AppTable.getColumn("가격").setWidth(145);
-		AppTable.getColumn("가격").setMinWidth(145);
-		AppTable.getColumn("가격").setMaxWidth(145);
+		AppTable.getColumn("가격").setWidth(130);
+		AppTable.getColumn("가격").setMinWidth(130);
+		AppTable.getColumn("가격").setMaxWidth(130);
 		
 		// 신청 ID 셀을 숨김 -> 신청 ID셀은 Key값이기 때문에 필요하지만, 보일 필요는 없기 때문에 가림
 		AppTable.getColumn("신청 ID").setWidth(0);
@@ -189,9 +189,10 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 			dispose();
 		}
 		else if(ActionCmd.equals("조회")) {
-			String theKey = (String)AppTable.getValueAt(SelectedRow, 3); // Key(신청 ID) 얻어오기
-			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI(theKey); // 상세정보 창 열기
+			String applicationID = (String)AppTable.getValueAt(SelectedRow, 3); // Key(신청 ID) 얻어오기
+			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI(applicationID); // 상세정보 창 열기
 			PetAppDetailWindow.setVisible(true);
+			dispose();
 		}
 		else {
 			System.out.println("Unexpected Error");

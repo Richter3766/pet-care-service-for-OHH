@@ -376,7 +376,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		add(JSepEnd);
 		JSepEnd.setBounds(0, 620, 600, 70);
 				
-		
+		// 뒤로가기 버튼
 		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
@@ -387,6 +387,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		CancelButton.setFocusPainted(false);
 		CancelButton.addActionListener(this);
 		
+		// 제출 버튼
 		RoundedButton SubmitButton = new RoundedButton("제출");
 		add(SubmitButton);
 		c = new Color(64,126,219);
