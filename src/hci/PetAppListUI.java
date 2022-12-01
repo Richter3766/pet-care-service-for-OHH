@@ -40,7 +40,7 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 	int SelectedRow;
 	
 	RoundedButton AppCancelButton;
-	
+	RoundedButton LookupButton;
 	public PetAppListUI() {
 		super("PetAppListUI");
 		setSize(600, 800);
@@ -87,12 +87,33 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		AppTable.getColumn("신청 ID").setCellRenderer(celAlignCenter);
 		AppTable.getColumn("신청 기간").setCellRenderer(celAlignCenter);
 		AppTable.getColumn("신청 상태").setCellRenderer(celAlignCenter);
-		AppTable.getTableHeader().setReorderingAllowed(false);
 		AppTable.addMouseListener(this);
 		
+		// 신청 ID 셀 크기 조정
+		AppTable.getColumn("신청 ID").setWidth(145);
+		AppTable.getColumn("신청 ID").setMinWidth(145);
+		AppTable.getColumn("신청 ID").setMaxWidth(145);
+				
+		// 신청 기간 셀 크기 조정
+		AppTable.getColumn("신청 기간").setWidth(250);
+		AppTable.getColumn("신청 기간").setMinWidth(250);
+		AppTable.getColumn("신청 기간").setMaxWidth(250);
+				
+		// 신청 상태 셀 크기 조정
+		AppTable.getColumn("신청 상태").setWidth(145);
+		AppTable.getColumn("신청 상태").setMinWidth(145);
+		AppTable.getColumn("신청 상태").setMaxWidth(145);
+		
+		// 셀 위치 변경 불가
+		AppTable.getTableHeader().setReorderingAllowed(false);
+		
+		// 셀 크기 변경 불가
+		AppTable.getTableHeader().setResizingAllowed(false);
+		
 		AppModel.removeRow(0); // 0번째 행 삭제(빈칸)
-		String a[] = {"1234", "11월 29일", "진행중"}; 
+		String a[] = {"임시 ID-0", "11월 29일", "진행중"}; 
 		AppModel.addRow(a); // 데이터 추가
+		
 		
 		// 데이터가 화면 넘어갈 시 정렬
 		JScrollPane AppScroll = new JScrollPane(AppTable);
@@ -100,6 +121,7 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		AppScroll.setBounds(20, 190, 540, 480);
 		AppScroll.getViewport().setBackground(Color.WHITE);
 		
+		// 뒤로가기 버튼
 		JButton CancelButton = new JButton(CancelButtonicon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
@@ -111,6 +133,7 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		CancelButton.setFocusPainted(false);
 		CancelButton.addActionListener(this);
 		
+		// 신청 취소 버튼
 		AppCancelButton = new RoundedButton("신청 취소");
 		add(AppCancelButton);
 		c = new Color(240,62,62);
@@ -120,6 +143,17 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		AppCancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		AppCancelButton.addActionListener(this);
 		AppCancelButton.setVisible(false);
+		
+		// 조회 버튼
+		LookupButton = new RoundedButton("조회");
+		add(LookupButton);
+		c = new Color(64,126,219);
+		LookupButton.setBackground(c);
+		LookupButton.setForeground(Color.WHITE);
+		LookupButton.setBounds(330, 680, 100, 50);
+		LookupButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		LookupButton.setVisible(false);
+		LookupButton.addActionListener(this);
 		
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -134,8 +168,13 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 			if(ans == 0){ // 신청 취소 수락
 				AppModel.removeRow(SelectedRow);
 				ConfirmUI.showMessageDialog(this,"신청이 취소되었습니다","신청 취소 완료");
+				LookupButton.setVisible(false);
 				AppCancelButton.setVisible(false);
 			}
+		}else if(ActionCmd.equals("조회")) {
+			String theKey = (String)AppTable.getValueAt(SelectedRow, 0); // Key(신청 ID) 얻어오기
+			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI(theKey); // 상세정보 창 열기
+			PetAppDetailWindow.setVisible(true);
 		}
 		else {
 			System.out.println("Unexpected Error");
@@ -145,6 +184,7 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 	
 	public void mouseClicked(MouseEvent e) {
 		SelectedRow = AppTable.getSelectedRow(); // 선택된 Table의 Row값 가져오기
+		LookupButton.setVisible(true);
 		AppCancelButton.setVisible(true);
 	 }
 
