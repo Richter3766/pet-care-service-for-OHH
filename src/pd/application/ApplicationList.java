@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import db.*;
 
 public final class ApplicationList {
-    private static final ApplicationList list = new ApplicationList();
+    private static ApplicationList list = new ApplicationList();
     private ApplicationList() {}
 
-    private final Hashtable<String, Application> forAcceptTable =
+    private static Hashtable<String, Application> forAcceptTable =
             ForAcceptTable.getInstance().getHashTable();           // 수락 대기 테이블
-    private final Hashtable<String, Application> forPaymentTable =
+    private static Hashtable<String, Application> forPaymentTable =
             ForPaymentTable.getInstance().getHashTable();         // 결제 대기 테이블
-    private final Hashtable<String, Application> forActiveTable =
+    private static Hashtable<String, Application> forActiveTable =
             ActiveTable.getInstance().getHashTable();                 // 진행중 테이블
-    private final Hashtable<String, Application> forCompleteTable =
+    private static Hashtable<String, Application> forCompleteTable =
             CompleteTable.getInstance().getHashTable();             // 완료 테이블
     
     public static ApplicationList getList(){
