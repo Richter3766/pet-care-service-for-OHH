@@ -15,7 +15,7 @@ public class MemberTable
     private MemberDM memberDM;
     
     private MemberTable() {
-    	memberDM = new MemberDM("MemberTable");
+    	memberDM = new MemberDM("Table/MemberTable");
     	memberhashtable = memberDM.readObjectData();
 		if(memberhashtable == null)
 			memberhashtable = new Hashtable<>();

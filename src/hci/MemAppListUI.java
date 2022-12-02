@@ -33,7 +33,6 @@ import javax.swing.table.DefaultTableModel;
  *  으로 구성됩니다
  */
 
-@SuppressWarnings("serial")
 public class MemAppListUI extends JFrame implements ActionListener, MouseListener{
 	
 	protected JTable AppTable;
@@ -42,22 +41,24 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 	RoundedButton ReviewButton;
 	RoundedButton PayButton;
 	RoundedButton RemoveButton;
+	RoundedButton LookupButton;
 	
 	int SelectedRow;
 	Color c;
 	
 	// 버튼 이미지 & 크기 변환
-	ImageIcon Cancelimg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon Cancelimg2 = new ImageIcon("././Image/CancelButton2.png");
+	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
 	
-	Image img1 = Cancelimg1.getImage();
+	Image img1 = CancelImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = Cancelimg2.getImage();
+	Image img2 = CancelImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
+	ApplicationList list;
 	
 	public MemAppListUI() {
 		super("MemAppListUI");
@@ -82,8 +83,8 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		JSepStart.setBounds(0, 170, 600, 70);			
 		
 		// 신청 목록
-		String header[] = {"신청 ID", "신청 기간", "신청 상태"};
-		String contents[][] = {{"","",""}};
+		String[] header = {"신청 ID", "신청 기간", "신청 상태"};
+		String[][] contents = {{"","",""}};
 		
 		AppModel = new DefaultTableModel(contents, header) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
@@ -105,7 +106,29 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		AppTable.getColumn("신청 ID").setCellRenderer(celAlignCenter);
 		AppTable.getColumn("신청 기간").setCellRenderer(celAlignCenter);
 		AppTable.getColumn("신청 상태").setCellRenderer(celAlignCenter);
+		
+		
+		// 신청 ID 셀 크기 조정
+		AppTable.getColumn("신청 ID").setWidth(130);
+		AppTable.getColumn("신청 ID").setMinWidth(130);
+		AppTable.getColumn("신청 ID").setMaxWidth(130);
+				
+		// 신청 기간 셀 크기 조정
+		AppTable.getColumn("신청 기간").setWidth(280);
+		AppTable.getColumn("신청 기간").setMinWidth(280);
+		AppTable.getColumn("신청 기간").setMaxWidth(280);
+				
+		// 신청 상태 셀 크기 조정
+		AppTable.getColumn("신청 상태").setWidth(130);
+		AppTable.getColumn("신청 상태").setMinWidth(130);
+		AppTable.getColumn("신청 상태").setMaxWidth(130);
+		
+		// 셀 위치 변경 불가
 		AppTable.getTableHeader().setReorderingAllowed(false);
+		
+		// 셀 크기 변경 불가
+		AppTable.getTableHeader().setResizingAllowed(false);
+		
 		// 데이터가 화면 넘어갈 시 정렬
 		JScrollPane AppScroll = new JScrollPane(AppTable);
 		add(AppScroll);
@@ -113,11 +136,9 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		AppScroll.getViewport().setBackground(Color.WHITE);
 		
 		AppModel.removeRow(0); // 0번째 행 삭제(빈칸)
-		/**
-		 *
-		* for 문으로 해시 테이블에 있는 값 추가
-		* */
-		ApplicationList list = ApplicationList.getList();
+
+		// 해시 테이블 값 추가
+		list = ApplicationList.getList();
 		Application application;
 		for(String key: list.getForAcceptTable().keySet()){
 			String temp = key.split("-")[0];
@@ -130,16 +151,47 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 					 AppModel.addRow(data);
 				}
 		}
-//		String[] a = {"1234", "11월 29일", "결제 대기"};
-//		AppModel.addRow(a); // 데이터 추가
-		
+		for(String key: list.getForPaymentTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForPaymentTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
+		for(String key: list.getForActiveTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForActiveTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
+		for(String key: list.getForCompleteTable().keySet()){
+			String temp = key.split("-")[0];
+			if(temp.compareTo("임시 ID") == 0){
+				application = list.getForCompleteTable().get(key);
+				String[] data = new String[3];
+				data[0] = application.getApplicationID();
+				data[1] = application.getPeriodOfService();
+				data[2] = application.getState();
+				AppModel.addRow(data);
+			}
+		}
+
 		// 뒤로가기 버튼
-		JButton CancelButton = new JButton(CancelButtonicon1);
+		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
 		CancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		CancelButton.setActionCommand("뒤로가기");
-		CancelButton.setRolloverIcon(CancelButtonicon2);
+		CancelButton.setRolloverIcon(CancelButtonIcon2);
 		CancelButton.setBorderPainted(false);
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
@@ -177,7 +229,17 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		RemoveButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		RemoveButton.addActionListener(this);	
 		RemoveButton.setVisible(false);
-				
+		
+		// 조회 버튼
+		LookupButton = new RoundedButton("조회");
+		add(LookupButton);
+		c = new Color(64,126,219);
+		LookupButton.setBackground(c);
+		LookupButton.setForeground(Color.WHITE);
+		LookupButton.setBounds(330, 680, 100, 50);
+		LookupButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		LookupButton.setVisible(false);
+		LookupButton.addActionListener(this);
 		
 	}
 	
@@ -193,25 +255,39 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 			int ans = ConfirmUI.showConfirmDialog(this,"리뷰를 작성하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 리뷰 작성 수락
 				// 선택된 신청의  ID를 ReviewUI로 넘겨줌
-				int applicationID = (int)AppTable.getValueAt( SelectedRow, 0);
+				String applicationID = (String) AppTable.getValueAt( SelectedRow, 0);
 				ReviewUI ReviewWindow = new ReviewUI(applicationID);
 				ReviewWindow.setVisible(true);
+				dispose();
 			}
 		}else if(ActionCmd.equals("결제")) {
-			//ReviewUI ReviewWindow = new ReviewUI();
-			//ReviewWindow.setVisible(true);
+			int ans = ConfirmUI.showConfirmDialog(this,"결제 창으로 이동하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
+			if(ans == 0){ // 결제창 이동
+				String applicationID = (String) AppTable.getValueAt( SelectedRow, 0);
+				PaymentUI PaymentWindow = new PaymentUI(applicationID);
+				PaymentWindow.setVisible(true);
+				dispose();
+			}
 		}else if(ActionCmd.equals("삭제")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 삭제하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 삭제하기
+				// 먼저 데이터베이스에서 삭제
+				String applicationID = (String) AppTable.getValueAt(SelectedRow, 0);
+				ApplicationList list = ApplicationList.getList();
+				list.removeForAccept(applicationID);
+				list.removeForPayment(applicationID);
 				AppModel.removeRow(SelectedRow);
-				/**
-				 * 이 부분에 신청 데이터베이스 정보 삭제하면 됨.
-				 */
+
 				ReviewButton.setVisible(false);
 				PayButton.setVisible(false);
 				RemoveButton.setVisible(false);
+				LookupButton.setVisible(false);
 				ConfirmUI.showMessageDialog(this,"삭제가 완료되었습니다.","확인 메세지");
 			}
+		}else if(ActionCmd.equals("조회")) {
+			String applicationID = (String)AppTable.getValueAt(SelectedRow, 0); // Key(신청 ID) 얻어오기
+			MemAppDetailUI MemAppDetailWindow = new MemAppDetailUI(applicationID); // 상세정보 창 열기
+			MemAppDetailWindow.setVisible(true);
 		}
 		else {
 			System.out.println("Unexpected Error");
@@ -220,28 +296,42 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 	}
 	
 	 public void mouseClicked(MouseEvent e) {
-		 SelectedRow = AppTable.getSelectedRow(); // 선택된 Table의 Row값 가져오기
+		 SelectedRow = AppTable.getSelectedRow(); // 선택된 Table 의 Row 값 가져오기
 		 String Status = (String)AppTable.getModel().getValueAt(SelectedRow,2);
 		 if(Status.equals("수락 대기")) {
 			 PayButton.setVisible(false);
 			 ReviewButton.setVisible(false);
 			 RemoveButton.setVisible(true);
-			 PayButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setVisible(true);
+			 RemoveButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setBounds(330, 680, 100, 50);
 		 }else if(Status.equals("결제 대기")) {
 			 ReviewButton.setVisible(false);
 			 RemoveButton.setVisible(true);
 			 PayButton.setVisible(true);
-			 PayButton.setBounds(330, 680, 100, 50);
-		 }else if(Status.equals("완료")) {
+			 LookupButton.setVisible(true);
+			 PayButton.setBounds(210, 680, 100, 50);
+			 RemoveButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setBounds(330, 680, 100, 50);
+		 }else if(Status.equals("진행중")) {
+			 ReviewButton.setVisible(false);
+			 PayButton.setVisible(false);
+			 RemoveButton.setVisible(false);
+			 LookupButton.setVisible(true);
+			 PayButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setBounds(450, 680, 100, 50);
+		}else if(Status.equals("완료")) {
 			 RemoveButton.setVisible(false);
 			 PayButton.setVisible(false);
 			 ReviewButton.setVisible(true);
+			 LookupButton.setVisible(true);
 			 PayButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setBounds(330, 680, 100, 50);
 		 }else {
 			 ReviewButton.setVisible(false);
 			 PayButton.setVisible(false);
 			 RemoveButton.setVisible(false);
-			 PayButton.setBounds(450, 680, 100, 50);
+			 LookupButton.setVisible(false);
 		 }
 	 }
 

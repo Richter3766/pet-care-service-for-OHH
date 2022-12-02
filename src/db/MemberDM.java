@@ -24,10 +24,9 @@ public class MemberDM {
 	
 	public MemberDM(String filePath) {
 		file = new File(filePath);
-		String fileName = file.getName();
 		try {
-			this.write = new ObjectOutputStream(new FileOutputStream(fileName));
-			this.read = new ObjectInputStream(new FileInputStream(fileName));
+			this.write = new ObjectOutputStream(new FileOutputStream(filePath));
+			this.read = new ObjectInputStream(new FileInputStream(filePath));
 		} catch (FileNotFoundException e) {
 			System.out.println("stream false");
 			e.printStackTrace();

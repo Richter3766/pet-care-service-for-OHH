@@ -15,7 +15,7 @@ public class CompleteTable
     private CompleteDM completeDM;
     
     private CompleteTable() {
-    	completeDM = new CompleteDM("CompleteTable");
+    	completeDM = new CompleteDM("Table/CompleteTable");
     	completehashtable = completeDM.readObjectData();
 		if(completehashtable == null)
 			completehashtable = new Hashtable<>();

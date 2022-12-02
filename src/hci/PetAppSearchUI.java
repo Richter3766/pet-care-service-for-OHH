@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,7 +34,6 @@ import javax.swing.table.DefaultTableModel;
  *  으로 구성됩니다
  */
 
-@SuppressWarnings("serial")
 public class PetAppSearchUI extends JFrame implements ActionListener, MouseListener{
 
 	protected JTable AppTable;
@@ -41,20 +42,22 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 	Color c;
 	
 	// 버튼 이미지 & 크기 변환
-	ImageIcon Cancelimg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon Cancelimg2 = new ImageIcon("././Image/CancelButton2.png");
+	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
 	
-	Image img1 = Cancelimg1.getImage();
+	Image img1 = CancelImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = Cancelimg2.getImage();
+	Image img2 = CancelImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
 	int SelectedRow;
 	
 	RoundedButton LookupButton;
+	ApplicationList list;
+	ArrayList<String> KeyList;
 	
 	public PetAppSearchUI() {
 		super("PetAppSearchUI");
@@ -79,8 +82,8 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		JSepStart.setBounds(0, 170, 600, 70);	
 		
 		// 신청 목록
-		String header[] = {"지역", "신청 기간","가격"};
-		String contents[][] = {{"","",""}};
+		String header[] = {"지역", "신청 기간","가격","신청 ID"};
+		String contents[][] = {{"","","",""}};
 		
 		// 신청 내역
 		AppModel = new DefaultTableModel(contents, header) {
@@ -103,7 +106,32 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		AppTable.getColumn("지역").setCellRenderer(celAlignCenter);
 		AppTable.getColumn("신청 기간").setCellRenderer(celAlignCenter);
 		AppTable.getColumn("가격").setCellRenderer(celAlignCenter);
+		
+		// 지역 셀 크기 조정
+		AppTable.getColumn("지역").setWidth(130);
+		AppTable.getColumn("지역").setMinWidth(130);
+		AppTable.getColumn("지역").setMaxWidth(130);
+		
+		// 신청 기간 셀 크기 조정
+		AppTable.getColumn("신청 기간").setWidth(280);
+		AppTable.getColumn("신청 기간").setMinWidth(280);
+		AppTable.getColumn("신청 기간").setMaxWidth(280);
+		
+		// 가격 셀 크기 조정
+		AppTable.getColumn("가격").setWidth(130);
+		AppTable.getColumn("가격").setMinWidth(130);
+		AppTable.getColumn("가격").setMaxWidth(130);
+		
+		// 신청 ID 셀을 숨김 -> 신청 ID 셀은 Key 값이기 때문에 필요하지만, 보일 필요는 없기 때문에 가림
+		AppTable.getColumn("신청 ID").setWidth(0);
+		AppTable.getColumn("신청 ID").setMinWidth(0);
+		AppTable.getColumn("신청 ID").setMaxWidth(0);
+		
+		// 셀 위치 변경 불가
 		AppTable.getTableHeader().setReorderingAllowed(false);
+		
+		// 셀 크기 변경 불가
+		AppTable.getTableHeader().setResizingAllowed(false);
 		
 		// 데이터가 화면 넘어갈 시 정렬
 		JScrollPane AppScroll = new JScrollPane(AppTable);
@@ -112,30 +140,27 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		AppScroll.getViewport().setBackground(Color.WHITE);
 		
 		AppModel.removeRow(0); // 0번째 행 삭제(빈칸)
-		/**
-		 *
-		 * for 문으로 해시 테이블에 있는 값 추가
-		 * */
-		ApplicationList list = ApplicationList.getList();
+
+		// 해시 테이블에 있는 값 추가
+		list = ApplicationList.getList();
 		Application application;
 		for(String key: list.getForAcceptTable().keySet()){
 			application = list.getForAcceptTable().get(key);
-			String[] data = new String[3];
+			String[] data = new String[4];
 			data[0] = application.getLocation();
 			data[1] = application.getPeriodOfService();
 			data[2] = application.getPrice();
+			data[3] = key;
 			AppModel.addRow(data);
 		}
-		String a[] = {"경북대 IT대학", "11월 29일", "1800원"}; 
-		AppModel.addRow(a); // 데이터 추가
 		
 		// 뒤로가기 버튼
-		JButton CancelButton = new JButton(CancelButtonicon1);
+		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
 		CancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		CancelButton.setActionCommand("뒤로가기");
-		CancelButton.setRolloverIcon(CancelButtonicon2);
+		CancelButton.setRolloverIcon(CancelButtonIcon2);
 		CancelButton.setBorderPainted(false);
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
@@ -161,8 +186,10 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 			dispose();
 		}
 		else if(ActionCmd.equals("조회")) {
-			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI();
+			String applicationID = (String)AppTable.getValueAt(SelectedRow, 3); // Key(신청 ID) 얻어오기
+			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI(applicationID); // 상세정보 창 열기
 			PetAppDetailWindow.setVisible(true);
+			dispose();
 		}
 		else {
 			System.out.println("Unexpected Error");
@@ -171,7 +198,7 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		SelectedRow = AppTable.getSelectedRow(); // 선택된 Table의 Row값 가져오기
+		SelectedRow = AppTable.getSelectedRow(); // 선택된 Table 의 Row 값 가져오기
 		LookupButton.setVisible(true);
 	 }
 

@@ -15,7 +15,7 @@ public class ForAcceptTable
     private ForAcceptDM foracceptDM;
     
     private ForAcceptTable() {
-    	foracceptDM = new ForAcceptDM("ForAcceptTable");
+    	foracceptDM = new ForAcceptDM("Table/ForAcceptTable");
     	foraccepthashtable = foracceptDM.readObjectData();
 		if(foraccepthashtable == null)
 			foraccepthashtable = new Hashtable<>();

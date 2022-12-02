@@ -31,7 +31,6 @@ import javax.swing.JComboBox;
  *  으로 구성됩니다
  */
 
-@SuppressWarnings("serial")
 public class ReviewUI extends JFrame implements ActionListener{
 		
 	JTextField ReviewTitleField;
@@ -42,21 +41,21 @@ public class ReviewUI extends JFrame implements ActionListener{
 	Color c;
 	
 	// 버튼 이미지 & 크기 변환
-	ImageIcon Cancelimg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon Cancelimg2 = new ImageIcon("././Image/CancelButton2.png");
+	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
 	
-	Image img1 = Cancelimg1.getImage();
+	Image img1 = CancelImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = Cancelimg2.getImage();
+	Image img2 = CancelImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
 	// 리뷰를 위한 ID
-	int applicationID;
+	String applicationID;
 	
-	public ReviewUI(int applicationID) {
+	public ReviewUI(String applicationID) {
 		super("ReviewUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,7 +99,7 @@ public class ReviewUI extends JFrame implements ActionListener{
         };
 		add(ReviewTitleField);
 	
-		// 텍스트박스 안에 뜨는 hint 구현용인데, 이게 자바 Swing 기본 기능에 없어서 Class로 구현했습니다
+		// 텍스트박스 안에 뜨는 hint 구현용인데, 이게 자바 Swing 기본 기능에 없어서 Class 로 구현했습니다
 		@SuppressWarnings("unused")
 		TextHint hint = new TextHint(ReviewTitleField, " 제목을 입력하세요");
 		
@@ -125,14 +124,14 @@ public class ReviewUI extends JFrame implements ActionListener{
 		ReviewArea.setBackground(c);
 		
 		@SuppressWarnings("unused")
-		TextAreaHint Areahint = new TextAreaHint(ReviewArea, "리뷰 작성하기");
+		TextAreaHint AreahInt = new TextAreaHint(ReviewArea, "리뷰 작성하기");
 		
 		// 뒤로가기 버튼
-		JButton CancelButton = new JButton(CancelButtonicon1);
+		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
 		CancelButton.setActionCommand("뒤로가기");
-		CancelButton.setRolloverIcon(CancelButtonicon2);
+		CancelButton.setRolloverIcon(CancelButtonIcon2);
 		CancelButton.setBorderPainted(false);
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
@@ -148,15 +147,15 @@ public class ReviewUI extends JFrame implements ActionListener{
 		SubmitButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		SubmitButton.addActionListener(this);
 		
-		// ID초기화
+		// ID 초기화
 		this.applicationID = applicationID;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			MemberUI MemberWindow = new MemberUI();
-			MemberWindow.setVisible(true);
+			MemAppListUI MemAppListWindow = new MemAppListUI();
+			MemAppListWindow.setVisible(true);
 			dispose();
 		}
 		else if(ActionCmd.equals("제출")) {
@@ -169,6 +168,9 @@ public class ReviewUI extends JFrame implements ActionListener{
 				// 신청완료된 신청을 가져온 다음 setReview
 				ApplicationList.getList().getForCompleteTable().get(this.applicationID).setReview(score, title, content);
 				ConfirmUI.showMessageDialog(null, score + title + content + "리뷰가 제출되었습니다","제출 완료");
+				MemberUI MemberWindow = new MemberUI();
+				MemberWindow.setVisible(true);
+				dispose();
 			}
 		}
 		else {

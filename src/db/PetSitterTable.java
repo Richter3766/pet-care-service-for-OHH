@@ -14,7 +14,7 @@ public class PetSitterTable
     private PetSitterDM petsitterDM;
     
     private PetSitterTable() {
-    	petsitterDM = new PetSitterDM("PetSitterTable");
+    	petsitterDM = new PetSitterDM("Table/PetSitterTable");
     	petsitterhashtable = petsitterDM.readObjectData();
 		if(petsitterhashtable == null)
 			petsitterhashtable = new Hashtable<>();

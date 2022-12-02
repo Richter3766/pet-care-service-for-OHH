@@ -14,35 +14,34 @@ import javax.swing.JSeparator;
 
 /*		회원 화면입니다.
  *	 
- *  대문 글자(안녕하세요! OOO님)
+ *  대문 글자(안녕하세요! OOO 님)
  *  
  *  돌봄 서비스 신청하기 -> MemAppInfoUI
  *  신청 내역 확인 -> MemAppListUI
  *  회원 정보 수정
  *  -> 이건 더미 버튼입니다
- *  Requirement에는 있기도 하고 허전해서 넣었습니다
+ *  Requirement 에는 있기도 하고 허전해서 넣었습니다
  *  
  *  로그아웃 -> LoginUI
  *  으로 구성됩니다
  */
 
-@SuppressWarnings("serial")
 public class MemberUI extends JFrame implements ActionListener{
 	
 	Color c;
 	String name = "박태정";
 	
 	// 버튼 이미지 & 크기 변환
-	ImageIcon logoutimg1 = new ImageIcon("././Image/ExitButton1.png");
-	ImageIcon logoutimg2 = new ImageIcon("././Image/ExitButton2.png");
+	ImageIcon logoutImg1 = new ImageIcon("././Image/ExitButton1.png");
+	ImageIcon logoutImg2 = new ImageIcon("././Image/ExitButton2.png");
 	
-	Image img1 = logoutimg1.getImage();
+	Image img1 = logoutImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-	ImageIcon LogOutButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon LogOutButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = logoutimg2.getImage();
+	Image img2 = logoutImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-	ImageIcon LogOutButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon LogOutButtonIcon2 = new ImageIcon(changeImg2);
 	
 	
 	public MemberUI() {
@@ -107,12 +106,12 @@ public class MemberUI extends JFrame implements ActionListener{
 		ChangeMemInfoButton.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		
 		// 로그아웃 버튼
-		JButton LogoutButton = new JButton(LogOutButtonicon1);
+		JButton LogoutButton = new JButton(LogOutButtonIcon1);
 		add(LogoutButton);
 		LogoutButton.setBounds(20, 670, 70, 70);
 		LogoutButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		LogoutButton.setActionCommand("로그아웃");
-		LogoutButton.setRolloverIcon(LogOutButtonicon2);
+		LogoutButton.setRolloverIcon(LogOutButtonIcon2);
 		LogoutButton.setBorderPainted(false);
 		LogoutButton.setContentAreaFilled(false);
 		LogoutButton.setFocusPainted(false);

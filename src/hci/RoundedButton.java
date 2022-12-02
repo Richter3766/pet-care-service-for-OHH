@@ -11,13 +11,12 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 
 /*
- * 둥근 버튼을 만드는 Class입니다 
+ * 둥근 버튼을 만드는 Class 입니다
  * 구글링해서 찾았습니다.
  * 
- * JButton을 상속하기 때문에 그냥 JButton 대신 RoundedButton 쓰면 됩니다
+ * JButton 을 상속하기 때문에 그냥 JButton 대신 RoundedButton 쓰면 됩니다
  */
 
-@SuppressWarnings("serial")
 public class RoundedButton extends JButton {
 
 
