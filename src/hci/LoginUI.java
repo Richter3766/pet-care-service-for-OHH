@@ -20,7 +20,7 @@ import javax.swing.JLabel;
  */
 
 
-
+@SuppressWarnings("serial")
 public class LoginUI extends JFrame implements ActionListener {
 	
 	Color c;

@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import pd.application.Application;
 import pd.application.ApplicationList;
 
+@SuppressWarnings("serial")
 public class PetAppListUI extends JFrame implements ActionListener, MouseListener{
 
 	protected JTable AppTable;
@@ -226,7 +227,7 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 	public void mouseClicked(MouseEvent e) {
 		SelectedRow = AppTable.getSelectedRow(); // 선택된 Table 의 Row 값 가져오기
 		String Status = (String)AppTable.getModel().getValueAt(SelectedRow,2);
-		if(Status.equals("완료")) {
+		if(Status.equals("완료") || Status.equals("진행중")) {
 			LookupButton.setVisible(true);
 			AppCancelButton.setVisible(false);
 			LookupButton.setBounds(450, 680, 100, 50);

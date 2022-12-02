@@ -27,6 +27,7 @@ import javax.swing.JSeparator;
  *  으로 구성됩니다
  */
 
+@SuppressWarnings("serial")
 public class PetAppDetailUI extends JFrame implements ActionListener{
 
 	Color c;

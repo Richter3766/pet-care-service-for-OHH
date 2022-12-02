@@ -34,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
  *  으로 구성됩니다
  */
 
+@SuppressWarnings("serial")
 public class PetAppSearchUI extends JFrame implements ActionListener, MouseListener{
 
 	protected JTable AppTable;
