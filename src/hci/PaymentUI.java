@@ -21,6 +21,7 @@ import javax.swing.JSeparator;
  *
  */
 
+@SuppressWarnings("serial")
 public class PaymentUI extends JFrame implements ActionListener{
 
 	Color c;

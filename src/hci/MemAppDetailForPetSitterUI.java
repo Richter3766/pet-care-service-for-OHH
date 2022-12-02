@@ -1,7 +1,5 @@
 package hci;
 
-import pd.application.ApplicationList;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
@@ -14,33 +12,29 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
-
-/*	 돌봄이 신청정보 세부정보 속 반려동물 정보 화면입니다.
+/*	 회원 신청정보 세부정보 속 돌봄이 정보 화면입니다.
  *	 
- *  대문 글자(회원의 반려동물 정보)
+ *  대문 글자(돌봄이 상세정보)
  *  
  *
  */
-
 @SuppressWarnings("serial")
-public class PetAppDetailForPetUI extends JFrame implements ActionListener{
+public class MemAppDetailForPetSitterUI extends JFrame implements ActionListener{
+	
 	// 버튼 이미지 & 크기 변환
-	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
-		
-	Image img1 = CancelImg1.getImage();
-	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
-		
-	Image img2 = CancelImg2.getImage();
-	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
+		ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+		ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
+			
+		Image img1 = CancelImg1.getImage();
+		Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+		ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
+			
+		Image img2 = CancelImg2.getImage();
+		Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+		ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
-	String applicationID;
-	ApplicationList list;
-	
-	public PetAppDetailForPetUI(String applicationID) {
-		super("PetAppDetailForPetUI");
+	public MemAppDetailForPetSitterUI() {
+		super("MemAppDetailForPetSitterUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -50,7 +44,7 @@ public class PetAppDetailForPetUI extends JFrame implements ActionListener{
 		getContentPane().setBackground(Color.WHITE);
 		
 		// 제목 항목
-		JLabel TitleLabel = new JLabel("회원의 반려동물 정보");
+		JLabel TitleLabel = new JLabel("돌봄이 상세정보");
 		TitleLabel.setHorizontalAlignment(JLabel.CENTER);
 		TitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 50));
 		add(TitleLabel);
@@ -60,8 +54,6 @@ public class PetAppDetailForPetUI extends JFrame implements ActionListener{
 		JSeparator JSepStart = new JSeparator();
 		add(JSepStart);
 		JSepStart.setBounds(0, 170, 600, 70);
-		
-		list = ApplicationList.getList();
 		
 		// 뒤로가기 버튼
 		JButton CancelButton = new JButton(CancelButtonIcon1);
@@ -73,8 +65,6 @@ public class PetAppDetailForPetUI extends JFrame implements ActionListener{
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
 		CancelButton.addActionListener(this);
-		
-		this.applicationID = applicationID;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
