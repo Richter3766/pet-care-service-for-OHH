@@ -31,6 +31,7 @@ import javax.swing.JComboBox;
  *  으로 구성됩니다
  */
 
+@SuppressWarnings("serial")
 public class ReviewUI extends JFrame implements ActionListener{
 		
 	JTextField ReviewTitleField;
