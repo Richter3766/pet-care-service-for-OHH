@@ -24,7 +24,12 @@ public class PetSitterDM {
 	public PetSitterDM(String filePath) {
 		file = new File(filePath);
 		try {
-			this.write = new ObjectOutputStream(new FileOutputStream(filePath));
+			if(!file.exists()) {
+				this.write = new ObjectOutputStream(new FileOutputStream(filePath));
+			}
+			else {
+				this.write = null;
+			}
 			this.read = new ObjectInputStream(new FileInputStream(filePath));
 		} catch (FileNotFoundException e) {
 			System.out.println("stream false");
@@ -36,9 +41,12 @@ public class PetSitterDM {
 	}
 	public void writeObjectData(Hashtable<String, PetSitter> a) {
 		try {
-			write.writeObject(a);
+			if(this.write == null) {
+				this.write = new ObjectOutputStream(new FileOutputStream(file.getAbsolutePath()));
+			}
+			this.write.writeObject(a);
 		} catch (IOException e) {
-			System.out.print("file write false");
+			System.out.println("file write false");
 			e.printStackTrace();
 		}
 	}
@@ -58,7 +66,9 @@ public class PetSitterDM {
 	}
 	public void close() {
 		try {
-			write.close();
+			if(this.write != null) {
+				this.write.close();
+			}
 		} catch (IOException e) {
 			System.out.println("write close False");
 			e.printStackTrace();
