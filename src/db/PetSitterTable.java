@@ -38,7 +38,7 @@ public class PetSitterTable
 	}
 
 	//전달받은 petsitterhashtable 파일에 저장
-	public void saveHashTable(Hashtable<String, PetSitter> petsitterhashtable) {
+	public void saveHashTable() {
 		petsitterDM.deletObjectData();
 		petsitterDM.writeObjectData(petsitterhashtable);
 	}

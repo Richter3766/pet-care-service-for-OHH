@@ -39,7 +39,7 @@ public class MemberTable
 	}
 	
 	//전달받은 memberhashtable 파일에 저장
-	public void saveHashTable(Hashtable<String, Member> memberhashtable) {
+	public void saveHashTable() {
 		memberDM.deletObjectData();
 		memberDM.writeObjectData(memberhashtable);
 	}
