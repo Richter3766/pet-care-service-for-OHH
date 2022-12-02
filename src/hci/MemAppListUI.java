@@ -33,7 +33,6 @@ import javax.swing.table.DefaultTableModel;
  *  으로 구성됩니다
  */
 
-@SuppressWarnings("serial")
 public class MemAppListUI extends JFrame implements ActionListener, MouseListener{
 	
 	protected JTable AppTable;
@@ -48,16 +47,16 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 	Color c;
 	
 	// 버튼 이미지 & 크기 변환
-	ImageIcon Cancelimg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon Cancelimg2 = new ImageIcon("././Image/CancelButton2.png");
+	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
 	
-	Image img1 = Cancelimg1.getImage();
+	Image img1 = CancelImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = Cancelimg2.getImage();
+	Image img2 = CancelImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
 	ApplicationList list;
 	
@@ -84,8 +83,8 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		JSepStart.setBounds(0, 170, 600, 70);			
 		
 		// 신청 목록
-		String header[] = {"신청 ID", "신청 기간", "신청 상태"};
-		String contents[][] = {{"","",""}};
+		String[] header = {"신청 ID", "신청 기간", "신청 상태"};
+		String[][] contents = {{"","",""}};
 		
 		AppModel = new DefaultTableModel(contents, header) {
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
@@ -137,10 +136,8 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		AppScroll.getViewport().setBackground(Color.WHITE);
 		
 		AppModel.removeRow(0); // 0번째 행 삭제(빈칸)
-		/**
-		 *
-		* for 문으로 해시 테이블에 있는 값 추가
-		* */
+
+		// 해시 테이블 값 추가
 		list = ApplicationList.getList();
 		Application application;
 		for(String key: list.getForAcceptTable().keySet()){
@@ -187,16 +184,14 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 				AppModel.addRow(data);
 			}
 		}
-//		String[] a = {"1234", "11월 29일", "결제 대기"};
-//		AppModel.addRow(a); // 데이터 추가
-		
+
 		// 뒤로가기 버튼
-		JButton CancelButton = new JButton(CancelButtonicon1);
+		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
 		CancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		CancelButton.setActionCommand("뒤로가기");
-		CancelButton.setRolloverIcon(CancelButtonicon2);
+		CancelButton.setRolloverIcon(CancelButtonIcon2);
 		CancelButton.setBorderPainted(false);
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
@@ -276,14 +271,13 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		}else if(ActionCmd.equals("삭제")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 삭제하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 삭제하기
+				// 먼저 데이터베이스에서 삭제
 				String applicationID = (String) AppTable.getValueAt(SelectedRow, 0);
 				ApplicationList list = ApplicationList.getList();
 				list.removeForAccept(applicationID);
 				list.removeForPayment(applicationID);
 				AppModel.removeRow(SelectedRow);
-				/**
-				 * 이 부분에 신청 데이터베이스 정보 삭제하면 됨.
-				 */
+
 				ReviewButton.setVisible(false);
 				PayButton.setVisible(false);
 				RemoveButton.setVisible(false);
@@ -302,7 +296,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 	}
 	
 	 public void mouseClicked(MouseEvent e) {
-		 SelectedRow = AppTable.getSelectedRow(); // 선택된 Table의 Row값 가져오기
+		 SelectedRow = AppTable.getSelectedRow(); // 선택된 Table 의 Row 값 가져오기
 		 String Status = (String)AppTable.getModel().getValueAt(SelectedRow,2);
 		 if(Status.equals("수락 대기")) {
 			 PayButton.setVisible(false);

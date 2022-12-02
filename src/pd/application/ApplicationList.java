@@ -4,7 +4,6 @@ import java.util.Hashtable;
 import java.util.ArrayList;
 
 import db.*;
-import pd.systemuser.*;
 
 public final class ApplicationList {
     private static final ApplicationList list = new ApplicationList();
@@ -55,8 +54,17 @@ public final class ApplicationList {
         }
         return null;
     }
+
+    public String isExistInForPayment(String userID){
+        for(String key:forPaymentTable.keySet()){
+            if(key.split("-")[0].compareTo(userID) == 0){
+                return key;
+            }
+        }
+        return null;
+    }
     
-    //생성한 application Table에 추가
+    //생성한 application Table 에 추가
     public void addForAccept(Application application){
         forAcceptTable.put(application.getApplicationID(), application);
     }
@@ -66,45 +74,33 @@ public final class ApplicationList {
         application.setState(0);
         forAcceptTable.put(applicationID, application);
     }
-    //forAcceptTable에서 forPaymentTable로 이동
+    //forAcceptTable 에서 forPaymentTable 로 이동
     public void moveForPayment(String applicationID) {
     	Application application = forAcceptTable.get(applicationID);
     	forAcceptTable.remove(applicationID);
     	application.setState(1);
     	forPaymentTable.put(applicationID, application);
     }
-    //forPaymentTable에서 forActiveTable로 이동
+    //forPaymentTable 에서 forActiveTable 로 이동
     public void moveForActive(String applicationID) {
     	Application application = forPaymentTable.get(applicationID);
     	forPaymentTable.remove(applicationID);
     	application.setState(2);
     	forActiveTable.put(applicationID, application);
     }
-    //forActiveTable에서 forCompleteTable로 이동
+    //forActiveTable 에서 forCompleteTable 로 이동
     public void moveForComplete(String applicationID) {
     	Application application = forActiveTable.get(applicationID);
     	forActiveTable.remove(applicationID);
     	application.setState(3);
     	forCompleteTable.put(applicationID, application);
     }
-    //forAcceptTable에서 삭제
+    //forAcceptTable 에서 삭제
     public void removeForAccept(String applicationID) {
     	forAcceptTable.remove(applicationID);
     }
-    //forPaymentTable에서 삭제
+    //forPaymentTable 에서 삭제
     public void removeForPayment(String applicationID) {
     	forPaymentTable.remove(applicationID);
-    }
-    
-    public void printHashTable(){
-        System.out.println("htForAcceptment");
-        for(String key: forAcceptTable.keySet()){
-            System.out.println(forAcceptTable.get(key).getApplicationID());
-        }
-        System.out.println("htForPayment");
-        for(String key: forPaymentTable.keySet()){
-            System.out.println(key);
-        }
-        System.out.println("");
     }
 }

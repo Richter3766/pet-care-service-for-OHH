@@ -91,7 +91,6 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 	protected JComboBox<String> StartAMPMCombo;
 	protected JComboBox<String> EndAMPMCombo;
 	
-	@SuppressWarnings("serial")
 	public MemAppInfoUI() {
 		super("MemAppInfoUI");
 		setSize(600, 800);
@@ -410,7 +409,8 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 			int ans = ConfirmUI.showConfirmDialog(this,"제출하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 제출 수락
 				Application application = new Application();
-				String isRedundant;
+				String redundantAppInAccept;
+				String redundantAppInPayment;
 				String services = "";
 
 				// 시간 저장
@@ -418,12 +418,12 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 						Objects.requireNonNull(StartMonthCombo.getSelectedItem()).toString(),
 						Objects.requireNonNull(StartDayCombo.getSelectedItem()).toString(),
 						Objects.requireNonNull(StartAMPMCombo.getSelectedItem()).toString(),
-						Objects.requireNonNull(StartHourCombo.getSelectedItem()).toString() + "시");
+						Objects.requireNonNull(StartHourCombo.getSelectedItem()) + "시");
 				String end = String.join(".", EndYearNumLabel.getText(),
 						Objects.requireNonNull(EndMonthCombo.getSelectedItem()).toString(),
 						Objects.requireNonNull(EndDayCombo.getSelectedItem()).toString(),
 						Objects.requireNonNull(EndAMPMCombo.getSelectedItem()).toString(),
-						Objects.requireNonNull(EndHourCombo.getSelectedItem()).toString() + "시");
+						Objects.requireNonNull(EndHourCombo.getSelectedItem()) + "시");
 				application.setPeriodOfService(String.join(" ~ ", start, end));
 
 				// 위치 저장
@@ -454,14 +454,16 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 				application.setApplicationID("임시 ID");
 
 				// 중복 정보가 있어 대체해야할 경우
+				redundantAppInAccept = application.requestIsRedundantInAccept(application.getUserID());
+				redundantAppInPayment = application.requestIsRedundantInPayment(application.getUserID());
 				int doYouReplace = 0;
-				if((isRedundant = application.requestApplication()) != null){
+				if(redundantAppInAccept != null || redundantAppInPayment != null){
 					doYouReplace = ConfirmUI.showConfirmDialog(this,
 							"신청이 존재합니다.\n대체하시겠습니까?","확인 메세지",
 							ConfirmUI.YES_NO_OPTION);
 					if(doYouReplace == 0){
-						application.requestReplaceApplication(isRedundant);
-						application.requestApplication();
+						application.requestRemoveAccept(redundantAppInAccept);
+						application.requestRemovePayment(redundantAppInPayment);
 					}
 					else{
 						ConfirmUI.showMessageDialog(this,"신청이 취소되었습니다","신청 취소");
@@ -471,6 +473,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 
 				// 신청 완료
 				if(doYouReplace == 0){
+					application.requestApplication();
 					ConfirmUI.showMessageDialog(this,"신청이 완료되었습니다","신청 완료");
 				}
 				MemberUI MemberWindow = new MemberUI();

@@ -7,7 +7,7 @@ import db.MemberTable;
 
 @SuppressWarnings("serial")
 public class Member extends SystemUser{
-	//static으로 선언된 membertable
+	//static 으로 선언된 membertable
     private static Hashtable<String, Member> membertable =
     		MemberTable.getInstance().getHashTable();
     private String enterWay;            // 출입 방법

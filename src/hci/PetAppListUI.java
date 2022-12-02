@@ -21,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
 import pd.application.Application;
 import pd.application.ApplicationList;
 
-@SuppressWarnings("serial")
 public class PetAppListUI extends JFrame implements ActionListener, MouseListener{
 
 	protected JTable AppTable;
@@ -29,16 +28,16 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 	
 	Color c;
 	
-	ImageIcon Cancelimg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon Cancelimg2 = new ImageIcon("././Image/CancelButton2.png");
+	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
 	
-	Image img1 = Cancelimg1.getImage();
+	Image img1 = CancelImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = Cancelimg2.getImage();
+	Image img2 = CancelImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
 	ApplicationList list;
 	
@@ -159,12 +158,12 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		AppScroll.getViewport().setBackground(Color.WHITE);
 		
 		// 뒤로가기 버튼
-		JButton CancelButton = new JButton(CancelButtonicon1);
+		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
 		CancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		CancelButton.setActionCommand("뒤로가기");
-		CancelButton.setRolloverIcon(CancelButtonicon2);
+		CancelButton.setRolloverIcon(CancelButtonIcon2);
 		CancelButton.setBorderPainted(false);
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
@@ -203,8 +202,8 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		else if(ActionCmd.equals("신청 취소")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 신청을 취소하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 신청 취소하기
+				// 신청 정보를 결제 대기에서 수락 대기로 변경
 				String applicationID = (String) AppTable.getValueAt(SelectedRow, 0);
-				Application application = list.getForAcceptTable().get(applicationID);
 				list.moveForPaymentToAccept(applicationID);
 
 				AppModel.removeRow(SelectedRow);
@@ -225,7 +224,7 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		SelectedRow = AppTable.getSelectedRow(); // 선택된 Table의 Row값 가져오기
+		SelectedRow = AppTable.getSelectedRow(); // 선택된 Table 의 Row 값 가져오기
 		String Status = (String)AppTable.getModel().getValueAt(SelectedRow,2);
 		if(Status.equals("완료")) {
 			LookupButton.setVisible(true);

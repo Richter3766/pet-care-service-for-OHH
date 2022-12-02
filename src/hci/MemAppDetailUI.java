@@ -15,22 +15,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
-@SuppressWarnings("serial")
 public class MemAppDetailUI extends JFrame implements ActionListener{
 
 	
 	Color c;
 	
-	ImageIcon Cancelimg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon Cancelimg2 = new ImageIcon("././Image/CancelButton2.png");
+	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
 	
-	Image img1 = Cancelimg1.getImage();
+	Image img1 = CancelImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = Cancelimg2.getImage();
+	Image img2 = CancelImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
 	ApplicationList list = ApplicationList.getList();
 	Application application;
@@ -60,14 +59,14 @@ public class MemAppDetailUI extends JFrame implements ActionListener{
 		JSepStart.setBounds(0, 170, 600, 70);
 		
 		this.applicationID = applicationID;
-		// Key값을 통해 선택한 신청의 정보 받아옴
-		application = list.getForAcceptTable().get(applicationID); // 수락 대기 Table에서 탐색
+		// Key 값을 통해 선택한 신청의 정보 받아옴
+		application = list.getForAcceptTable().get(applicationID); // 수락 대기 Table 에서 탐색
 		if(application == null) {
-			application = list.getForPaymentTable().get(applicationID); // 결제 대기 Table에서 탐색
+			application = list.getForPaymentTable().get(applicationID); // 결제 대기 Table 에서 탐색
 		}if(application == null) {
-			application = list.getForCompleteTable().get(applicationID); // 완료 Table에서 탐색
+			application = list.getForCompleteTable().get(applicationID); // 완료 Table 에서 탐색
 		}if(application == null) {
-			application = list.getForActiveTable().get(applicationID); // 진행 Table에서 탐색
+			application = list.getForActiveTable().get(applicationID); // 진행 Table 에서 탐색
 		}if(application == null) {
 			ConfirmUI.showMessageDialog(this,"신청 ID에 대한 신청 정보를 찾지 못했습니다.","오류 메세지"); // 모두 찾지 못했을 시 오류 메세지 출력
 			dispose();
@@ -130,12 +129,12 @@ public class MemAppDetailUI extends JFrame implements ActionListener{
 		priceContentLabel.setBounds(200,520,600,30);
 		priceContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
-		JButton CancelButton = new JButton(CancelButtonicon1);
+		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
 		CancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		CancelButton.setActionCommand("뒤로가기");
-		CancelButton.setRolloverIcon(CancelButtonicon2);
+		CancelButton.setRolloverIcon(CancelButtonIcon2);
 		CancelButton.setBorderPainted(false);
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);

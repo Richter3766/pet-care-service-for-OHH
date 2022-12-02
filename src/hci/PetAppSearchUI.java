@@ -34,7 +34,6 @@ import javax.swing.table.DefaultTableModel;
  *  으로 구성됩니다
  */
 
-@SuppressWarnings("serial")
 public class PetAppSearchUI extends JFrame implements ActionListener, MouseListener{
 
 	protected JTable AppTable;
@@ -43,16 +42,16 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 	Color c;
 	
 	// 버튼 이미지 & 크기 변환
-	ImageIcon Cancelimg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon Cancelimg2 = new ImageIcon("././Image/CancelButton2.png");
+	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
 	
-	Image img1 = Cancelimg1.getImage();
+	Image img1 = CancelImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = Cancelimg2.getImage();
+	Image img2 = CancelImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
 	int SelectedRow;
 	
@@ -123,7 +122,7 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		AppTable.getColumn("가격").setMinWidth(130);
 		AppTable.getColumn("가격").setMaxWidth(130);
 		
-		// 신청 ID 셀을 숨김 -> 신청 ID셀은 Key값이기 때문에 필요하지만, 보일 필요는 없기 때문에 가림
+		// 신청 ID 셀을 숨김 -> 신청 ID 셀은 Key 값이기 때문에 필요하지만, 보일 필요는 없기 때문에 가림
 		AppTable.getColumn("신청 ID").setWidth(0);
 		AppTable.getColumn("신청 ID").setMinWidth(0);
 		AppTable.getColumn("신청 ID").setMaxWidth(0);
@@ -141,10 +140,8 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		AppScroll.getViewport().setBackground(Color.WHITE);
 		
 		AppModel.removeRow(0); // 0번째 행 삭제(빈칸)
-		/**
-		 *
-		 * for 문으로 해시 테이블에 있는 값 추가
-		 * */
+
+		// 해시 테이블에 있는 값 추가
 		list = ApplicationList.getList();
 		Application application;
 		for(String key: list.getForAcceptTable().keySet()){
@@ -158,12 +155,12 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		}
 		
 		// 뒤로가기 버튼
-		JButton CancelButton = new JButton(CancelButtonicon1);
+		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
 		CancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		CancelButton.setActionCommand("뒤로가기");
-		CancelButton.setRolloverIcon(CancelButtonicon2);
+		CancelButton.setRolloverIcon(CancelButtonIcon2);
 		CancelButton.setBorderPainted(false);
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
@@ -201,7 +198,7 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		SelectedRow = AppTable.getSelectedRow(); // 선택된 Table의 Row값 가져오기
+		SelectedRow = AppTable.getSelectedRow(); // 선택된 Table 의 Row 값 가져오기
 		LookupButton.setVisible(true);
 	 }
 

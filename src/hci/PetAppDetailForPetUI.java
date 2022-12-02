@@ -1,6 +1,5 @@
 package hci;
 
-import pd.application.Application;
 import pd.application.ApplicationList;
 
 import java.awt.event.ActionEvent;
@@ -8,19 +7,12 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.text.DecimalFormat;
-import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 
 /*	 돌봄이 신청정보 세부정보 속 반려동물 정보 화면입니다.
  *	 
@@ -29,11 +21,7 @@ import javax.swing.JCheckBox;
  *
  */
 
-@SuppressWarnings("serial")
 public class PetAppDetailForPetUI extends JFrame implements ActionListener{
-
-	Color c;
-	
 	// 버튼 이미지 & 크기 변환
 	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
 	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");

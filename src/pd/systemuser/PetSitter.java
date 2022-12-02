@@ -6,7 +6,7 @@ import db.PetSitterTable;
 
 @SuppressWarnings("serial")
 public class PetSitter extends SystemUser{
-	//static으로 선언된 petsittertable
+	//static 으로 선언된 petsittertable
 	private static Hashtable<String, PetSitter> petsittertable =
     		PetSitterTable.getInstance().getHashTable();
     private String[] certificate;             // 소지 자격증

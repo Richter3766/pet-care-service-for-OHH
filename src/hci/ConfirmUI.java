@@ -15,12 +15,12 @@ import javax.swing.JLabel;
  *  사용법
  * - 1. 일반 메세지 창
  * ConfirmUI.showMessageDialog(this,띄울 메세지, 메세지창 제목);
- * 입력한 메세지를 보여주는 메세지창을 띄운다. return값 X
+ * 입력한 메세지를 보여주는 메세지창을 띄운다. return 값 X
  * 
  * - 2. 확인 메세지 창
  * ConfirmUI.showConfirmDialog(this,띄울 메세지, 메세지창 제목, 선택창 옵션);
  * 입력한 메세지를 보여주는 메세지창을 띄우며, 선택창 옵션에 따라 선택창을 바꿀 수 있다.
- * return값은 int형으로, Yes/OK -> 0, No -> 1, Cancel -> 2, 기본(x로 닫기) -> -1을 반환한다
+ * return 값은 int 형으로, Yes/OK -> 0, No -> 1, Cancel -> 2, 기본(x로 닫기) -> -1을 반환한다
  * 옵션 : 
  *  2-1. DEFAULT_OPTION 
  *  선택창이 확인 하나뿐이다.
@@ -31,14 +31,13 @@ import javax.swing.JLabel;
  *  2-4. OK_CANCEL_OPTION
  *  확인/취소로 나뉘는 2개의 선택창을 제공한다.
  * 
- *  옵션 입력시에는 ConfirmUI.DEFAULT_OPION 이런식으로 입력하면 된다.
+ *  옵션 입력시에는 ConfirmUI.DEFAULT_OPTION 이런식으로 입력하면 된다.
  * 
- *  이 클래스의 메소드는 static으로 생성 없이도 사용가능하다
+ *  이 클래스의 메소드는 static 으로 생성 없이도 사용가능하다
  *  
  *  JOptionPane()을 참고했으며, ShowInputDialog(입력창 제공)가 필요하다면 추가 가능
  */
 
-@SuppressWarnings("serial")
 public class ConfirmUI extends JDialog implements ActionListener {
 	
 	Color c;

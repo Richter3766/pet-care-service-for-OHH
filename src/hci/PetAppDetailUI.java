@@ -27,7 +27,6 @@ import javax.swing.JSeparator;
  *  으로 구성됩니다
  */
 
-@SuppressWarnings("serial")
 public class PetAppDetailUI extends JFrame implements ActionListener{
 
 	Color c;
@@ -37,16 +36,16 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 	private final int ACTIVE_TABLE = 2; // 진행중 Table
 	private final int COMPLETE_TABLE = 3; // 완료 Table
 	
-	ImageIcon Cancelimg1 = new ImageIcon("././Image/CancelButton1.png");
-	ImageIcon Cancelimg2 = new ImageIcon("././Image/CancelButton2.png");
+	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
+	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
 	
-	Image img1 = Cancelimg1.getImage();
+	Image img1 = CancelImg1.getImage();
 	Image changeImg1 = img1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon1 = new ImageIcon(changeImg1);
+	ImageIcon CancelButtonIcon1 = new ImageIcon(changeImg1);
 	
-	Image img2 = Cancelimg2.getImage();
+	Image img2 = CancelImg2.getImage();
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	ImageIcon CancelButtonicon2 = new ImageIcon(changeImg2);
+	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
 	ApplicationList list = ApplicationList.getList();
 	Application application;
@@ -77,17 +76,17 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 		JSepStart.setBounds(0, 170, 600, 70);
 		
 		this.applicationID = applicationID;
-		// Key값을 통해 선택한 신청의 정보 받아옴
-		application = list.getForAcceptTable().get(applicationID); // 수락 대기 Table에서 탐색 -> 이때는 수락버튼 활성화
+		// Key 값을 통해 선택한 신청의 정보 받아옴
+		application = list.getForAcceptTable().get(applicationID); // 수락 대기 Table 에서 탐색 -> 이때는 수락버튼 활성화
 		TableCheck = ACCEPT_TABLE;
 		if(application == null) {
-			application = list.getForPaymentTable().get(applicationID); // 결제 대기 Table에서 탐색 -> 수락버튼 비활성화
+			application = list.getForPaymentTable().get(applicationID); // 결제 대기 Table 에서 탐색 -> 수락버튼 비활성화
 			TableCheck = PAYMENT_TABLE;
 		}if(application == null) {
-			application = list.getForActiveTable().get(applicationID); // 진행 Table에서 탐색 -> 완료버튼 활성화
+			application = list.getForActiveTable().get(applicationID); // 진행 Table 에서 탐색 -> 완료버튼 활성화
 			TableCheck = ACTIVE_TABLE;
 		}if(application == null) {
-			application = list.getForCompleteTable().get(applicationID); // 완료 Table에서 탐색 -> 수락버튼 비활성화
+			application = list.getForCompleteTable().get(applicationID); // 완료 Table 에서 탐색 -> 수락버튼 비활성화
 			TableCheck = COMPLETE_TABLE;
 		}if(application == null) {
 			ConfirmUI.showMessageDialog(this,"신청 ID에 대한 신청 정보를 찾지 못했습니다.","오류 메세지"); // 모두 찾지 못했을 시 오류 메세지 출력
@@ -150,32 +149,32 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 		add(priceContentLabel);
 		priceContentLabel.setBounds(200,520,600,30);
 		priceContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		
+
 		/*
 		// 반려동물 마리수
-		JLabel PetnumTitleLabel = new JLabel("반려동물 마리수 ");
-		add(PetnumTitleLabel);
-		PetnumTitleLabel.setBounds(20,480,200,30);
-		PetnumTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		JLabel PetNumTitleLabel = new JLabel("반려동물 마리수 ");
+		add(PetNumTitleLabel);
+		PetNumTitleLabel.setBounds(20,480,200,30);
+		PetNumTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
-		JLabel PetnumContentLabel = new JLabel(); // <- 반려동물 마리수 넣으면 됨
-		add(PetnumContentLabel);
-		PetnumContentLabel.setBounds(200,480,600,30);
-		PetnumContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		
+		JLabel PetNumContentLabel = new JLabel(); // <- 반려동물 마리수 넣으면 됨
+		add(PetNumContentLabel);
+		PetNumContentLabel.setBounds(200,480,600,30);
+		PetNumContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+
 		// 반려동물 나이
-		JLabel PetageTitleLabel = new JLabel("반려동물 마리수 ");
-		add(PetageTitleLabel);
-		PetageTitleLabel.setBounds(20,540,200,30);
-		PetageTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		JLabel PetAgeTitleLabel = new JLabel("반려동물 마리수 ");
+		add(PetAgeTitleLabel);
+		PetAgeTitleLabel.setBounds(20,540,200,30);
+		PetAgeTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
-		JLabel PetageContentLabel = new JLabel(); // <- 반려동물 나이 넣으면 됨
-		add(PetageContentLabel);
-		PetageContentLabel.setBounds(200,540,600,30);
-		PetageContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		
+		JLabel PetAgeContentLabel = new JLabel(); // <- 반려동물 나이 넣으면 됨
+		add(PetAgeContentLabel);
+		PetAgeContentLabel.setBounds(200,540,600,30);
+		PetAgeContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+
 		*/
-		
+
 		// 반려동물 세부 정보를 볼 수 있는 버튼 -> 결제 대기부터만 볼 수 있음
 		RoundedButton PetInfoButton = new RoundedButton("반려동물 정보 보기");
 		add(PetInfoButton);
@@ -187,12 +186,12 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 		PetInfoButton.addActionListener(this);
 		
 		
-		JButton CancelButton = new JButton(CancelButtonicon1);
+		JButton CancelButton = new JButton(CancelButtonIcon1);
 		add(CancelButton);
 		CancelButton.setBounds(0, 660, 100, 100);
 		CancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		CancelButton.setActionCommand("뒤로가기");
-		CancelButton.setRolloverIcon(CancelButtonicon2);
+		CancelButton.setRolloverIcon(CancelButtonIcon2);
 		CancelButton.setBorderPainted(false);
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
@@ -238,12 +237,11 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 			if(TableCheck == ACCEPT_TABLE) { // 수락 테이블일 경우 -> 돌봄 서비스 신청 조회일 경우
 				PetAppSearchUI PetAppSearchWindow = new PetAppSearchUI();
 				PetAppSearchWindow.setVisible(true);
-				dispose();
 			}else { // 이외의 경우 -> 신청 내역 확인
 				PetAppListUI PetAppListWindow = new PetAppListUI();
 				PetAppListWindow.setVisible(true);
-				dispose();
 			}
+			dispose();
 		}
 		else if(ActionCmd.equals("수락")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"신청을 수락하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);

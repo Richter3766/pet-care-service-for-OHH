@@ -1,6 +1,5 @@
 package hci;
 
-import pd.application.Application;
 import pd.application.ApplicationList;
 
 import java.awt.event.ActionEvent;
@@ -8,19 +7,12 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.text.DecimalFormat;
-import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 
 /*	 결제 화면입니다.
  *	 
@@ -29,7 +21,6 @@ import javax.swing.JCheckBox;
  *
  */
 
-@SuppressWarnings("serial")
 public class PaymentUI extends JFrame implements ActionListener{
 
 	Color c;
