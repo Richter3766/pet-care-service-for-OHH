@@ -41,7 +41,7 @@ public final class ApplicationList {
 
 	/**
      * 사용자 ID를 input 으로 받아
-     * 상태가 "신청 대기"나 "결제 대기"에 있는 신청이 있는지 검사하고
+     * 상태가 "신청 대기"에 있는 신청이 있는지 검사하고
      * 있으면 그 신청의 ID, 없으면 null 을 반환
      * @param userID 사용자 ID
      * @return key or null
@@ -54,7 +54,13 @@ public final class ApplicationList {
         }
         return null;
     }
-
+    /**
+     * 사용자 ID를 input 으로 받아
+     * 상태가 "결제 대기"에 있는 신청이 있는지 검사하고
+     * 있으면 그 신청의 ID, 없으면 null 을 반환
+     * @param userID 사용자 ID
+     * @return key or null
+     */
     public String isExistInForPayment(String userID){
         for(String key:forPaymentTable.keySet()){
             if(key.split("-")[0].compareTo(userID) == 0){
@@ -63,11 +69,15 @@ public final class ApplicationList {
         }
         return null;
     }
-    
-    //생성한 application Table 에 추가
+
+    /**
+     * 인자로 받은 신청 정보를 테이블에 등록한다.
+     * @param application 등록할 신청 정보
+     */
     public void addForAccept(Application application){
         forAcceptTable.put(application.getApplicationID(), application);
     }
+
     public void moveForPaymentToAccept(String applicationID){
         Application application = forPaymentTable.get(applicationID);
         forPaymentTable.remove(applicationID);
@@ -95,11 +105,18 @@ public final class ApplicationList {
     	application.setState(3);
     	forCompleteTable.put(applicationID, application);
     }
-    //forAcceptTable 에서 삭제
+
+    /**
+     * 인자로 받은 ID 값으로 신청 정보를 '신청 정보' 테이블에서 삭제한다
+     * @param applicationID 삭제할 신청 정보
+     */
     public void removeForAccept(String applicationID) {
     	forAcceptTable.remove(applicationID);
     }
-    //forPaymentTable 에서 삭제
+    /**
+     * 인자로 받은 ID 값으로 신청 정보를 '결제 대기' 테이블에서 삭제한다
+     * @param applicationID 삭제할 신청 정보
+     */
     public void removeForPayment(String applicationID) {
     	forPaymentTable.remove(applicationID);
     }
