@@ -1,6 +1,8 @@
 package pd.application;
 
-public class Application {
+import java.io.Serializable;
+
+public class Application implements Serializable{
     private String applicationID;               // 신청 ID        형태: "userId-idIdx"
     private String periodOfService;             // 이용 시간
     private String location;                    // 위치

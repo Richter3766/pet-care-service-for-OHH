@@ -36,6 +36,7 @@ import javax.swing.JCheckBox;
  *  으로 구성됩니다
  */
 
+@SuppressWarnings("serial")
 public class MemAppInfoUI extends JFrame implements ActionListener {
 
 	final static int nameY = 20; 				// 이름 항목의 Y축 좌표

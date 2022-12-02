@@ -38,6 +38,7 @@ import javax.swing.JLabel;
  *  JOptionPane()을 참고했으며, ShowInputDialog(입력창 제공)가 필요하다면 추가 가능
  */
 
+@SuppressWarnings("serial")
 public class ConfirmUI extends JDialog implements ActionListener {
 	
 	Color c;

@@ -39,7 +39,7 @@ public class ForAcceptTable
 	}
 	
 	//전달받은 foaccepthashtable 파일에 저장
-	public void saveHashTable(Hashtable<String, Application> foraccepthashtable) {
+	public void saveHashTable() {
 		foracceptDM.deletObjectData();
 		foracceptDM.writeObjectData(foraccepthashtable);
 	}

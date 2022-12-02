@@ -39,7 +39,7 @@ public class ActiveTable
 	}
 	
 	//파일에 전달받은 activehashtable 저장
-	public void saveHashTable(Hashtable<String, Application> activehashtable) {
+	public void saveHashTable() {
 		activeDM.deletObjectData();
 		activeDM.writeObjectData(activehashtable);
 	}
