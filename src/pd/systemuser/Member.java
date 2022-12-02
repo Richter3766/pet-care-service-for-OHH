@@ -49,7 +49,7 @@ public class Member extends SystemUser{
     
     //static인 membertable을 이용하는 함수들
     //userID로 멤버를 찾아서 반환
-    public Member getMember(String UserID) {
+    public static Member getMember(String UserID) {
     	return membertable.get(UserID);
 
     }

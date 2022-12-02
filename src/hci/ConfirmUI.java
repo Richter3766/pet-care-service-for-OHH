@@ -2,6 +2,7 @@ package hci;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -163,11 +164,142 @@ public class ConfirmUI extends JDialog implements ActionListener {
 			CancelButton.setVisible(true);
 		}
 	}
-	
-	
 	}
 	
-	public ConfirmUI(JFrame parentFrame,String message, String title) {
+	public ConfirmUI(JDialog parentDialog,String message, String title, int selectOption, int funcOption) {
+		super(parentDialog,title,true);
+		setSize(300, 150);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setLayout(null);
+		setResizable(false);
+		
+		getContentPane().setBackground(Color.WHITE);
+		
+		
+		JLabel MessageLabel = new JLabel(message);
+	    add(MessageLabel);
+	    MessageLabel.setHorizontalAlignment(JLabel.CENTER);
+	    MessageLabel.setBackground(Color.WHITE);
+	    MessageLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+	    MessageLabel.setBounds(0, 12, 285, 40);
+	    
+	    
+		RoundedButton YesButton = new RoundedButton("네");
+		add(YesButton);
+		c = new Color(64,126,219);
+		YesButton.setBackground(c);
+		YesButton.setBounds(60, 70, 60, 30);
+		YesButton.setForeground(Color.WHITE);
+		YesButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		YesButton.addActionListener(this);
+		
+		RoundedButton NoButton = new RoundedButton("아니요");
+		add(NoButton);
+		c = new Color(64,126,219);
+		NoButton.setBackground(c);
+		NoButton.setForeground(Color.WHITE);
+		NoButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		NoButton.addActionListener(this);
+		
+		RoundedButton OKButton = new RoundedButton("확인");
+		add(OKButton);
+		c = new Color(64,126,219);
+		OKButton.setBackground(c);
+		OKButton.setForeground(Color.WHITE);
+		OKButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		OKButton.addActionListener(this);
+		
+		RoundedButton CancelButton = new RoundedButton("취소");
+		add(CancelButton);
+		c = new Color(64,126,219);
+		CancelButton.setBackground(c);
+		CancelButton.setForeground(Color.WHITE);
+		CancelButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		CancelButton.addActionListener(this);
+
+
+		if(funcOption == FUNC_INPUT)
+		{
+			YesButton.setBounds(60, 70, 60, 30);
+			NoButton.setBounds(160, 70, 60, 30);
+			OKButton.setBounds(60, 70, 60, 30);
+			CancelButton.setBounds(160, 70, 60, 30);
+			
+			YesButton.setVisible(false);
+			NoButton.setVisible(false);
+			OKButton.setVisible(false);
+			CancelButton.setVisible(false);
+		}
+		if(funcOption == FUNC_CONFIRM) 
+		{
+			if(selectOption == DEFAULT_OPTION) {
+				OKButton.setBounds(110, 70, 60, 30);
+				
+				YesButton.setVisible(false);
+				NoButton.setVisible(false);
+				OKButton.setVisible(true);
+				CancelButton.setVisible(false);
+			}else if(selectOption == OK_CANCEL_OPTION) {
+				OKButton.setBounds(60, 70, 60, 30);
+				CancelButton.setBounds(160, 70, 60, 30);
+				
+				YesButton.setVisible(false);
+				NoButton.setVisible(false);
+				OKButton.setVisible(true);
+				CancelButton.setVisible(true);
+			}else if(selectOption == YES_NO_OPTION) {
+				YesButton.setBounds(60, 70, 60, 30);
+				NoButton.setBounds(160, 70, 60, 30);
+				
+				YesButton.setVisible(true);
+				NoButton.setVisible(true);
+				OKButton.setVisible(false);
+				CancelButton.setVisible(false);
+			}else if(selectOption == YES_NO_CANCEL_OPTION) {
+				YesButton.setBounds(40, 70, 60, 30);
+				NoButton.setBounds(110, 70, 60, 30);
+				CancelButton.setBounds(180, 70, 60, 30);
+				
+				YesButton.setVisible(true);
+				NoButton.setVisible(true);
+				OKButton.setVisible(false);
+				CancelButton.setVisible(true);
+			}
+		}
+	
+	}
+	public ConfirmUI(JDialog parentDialog, String message, String title) {
+		super(parentDialog,title,true);
+		setSize(300, 150);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setLayout(null);
+		setResizable(false);
+		
+		getContentPane().setBackground(Color.WHITE);
+		
+		
+		JLabel MessageLabel = new JLabel(message);
+	    add(MessageLabel);
+	    MessageLabel.setHorizontalAlignment(JLabel.CENTER);
+	    MessageLabel.setBackground(Color.WHITE);
+	    MessageLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+	    MessageLabel.setBounds(0, 12, 285, 40);
+	    
+		RoundedButton OKButton = new RoundedButton("확인");
+		add(OKButton);
+		c = new Color(64,126,219);
+		OKButton.setBackground(c);
+		OKButton.setBounds(110, 70, 60, 30);
+		OKButton.setForeground(Color.WHITE);
+		OKButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		OKButton.addActionListener(this);
+
+		
+		}
+	
+	public ConfirmUI(JFrame parentFrame, String message, String title) {
 		super(parentFrame,title,true);
 		setSize(300, 150);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -197,6 +329,8 @@ public class ConfirmUI extends JDialog implements ActionListener {
 		
 		}
 	
+	
+	
 	public static int showConfirmDialog(JFrame parentFrame,String message, String title, int selectOption)
 	{
 		ConfirmUI ConfirmWindow = new ConfirmUI(parentFrame,message,title,selectOption,FUNC_CONFIRM);
@@ -204,8 +338,22 @@ public class ConfirmUI extends JDialog implements ActionListener {
 		
 		return ConfirmWindow.getVal();
 	}
+	public static int showConfirmDialog(JDialog parentDialog,String message, String title, int selectOption)
+	{
+		ConfirmUI ConfirmWindow = new ConfirmUI(parentDialog,message,title,selectOption,FUNC_CONFIRM);
+		ConfirmWindow.setVisible(true);
+		
+		return ConfirmWindow.getVal();
+	}
 	
 	public static void showMessageDialog(JFrame parentFrame,String message, String title)
+	{
+		ConfirmUI ConfirmWindow = new ConfirmUI(parentFrame,message,title);
+		ConfirmWindow.setVisible(true);
+		
+	}
+	
+	public static void showMessageDialog(JDialog parentFrame,String message, String title)
 	{
 		ConfirmUI ConfirmWindow = new ConfirmUI(parentFrame,message,title);
 		ConfirmWindow.setVisible(true);
