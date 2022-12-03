@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
-import pd.systemuser.*;
+
 /*	  돌봄이 화면입니다.
  *	 
  *  대문 글자(안녕하세요! OOO 님)
@@ -45,10 +45,7 @@ public class PetSitterUI extends JFrame implements ActionListener{
 	Image changeImg2 = img2.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 	ImageIcon LogOutButtonIcon2 = new ImageIcon(changeImg2);
 	
-	PetSitter ThePetSitter;
-	String ID;
-	
-	public PetSitterUI(String ID) {
+	public PetSitterUI() {
 		super("PetSitterUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -57,8 +54,6 @@ public class PetSitterUI extends JFrame implements ActionListener{
 		setResizable(false);
 		
 		getContentPane().setBackground(Color.WHITE);
-		
-		ThePetSitter = PetSitter.getPetSitter(ID);
 		
 		// 대문 글자 (안녕하세요!)
 		JLabel TitleLabel = new JLabel("안녕하세요!");
@@ -69,7 +64,7 @@ public class PetSitterUI extends JFrame implements ActionListener{
 		TitleLabel.setBounds(30, 50, 500, 70);
 		
 		// 대문 글자의 돌봄이 이름 부분
-		JLabel NameLabel = new JLabel(ThePetSitter.getName() + "님");
+		JLabel NameLabel = new JLabel(name + "님");
 		NameLabel.setHorizontalAlignment(JLabel.LEFT);
 		c = new Color(103,155,245);
 		NameLabel.setForeground(Color.BLACK);
@@ -122,26 +117,26 @@ public class PetSitterUI extends JFrame implements ActionListener{
 		LogoutButton.setContentAreaFilled(false);
 		LogoutButton.setFocusPainted(false);
 		LogoutButton.addActionListener(this);
-		
-		this.ID = ID;
 	}
 	
 	
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("돌봄 서비스 신청 조회")) {
-			PetAppSearchUI PetAppSearchWindow = new PetAppSearchUI(ID);
+			PetAppSearchUI PetAppSearchWindow = new PetAppSearchUI();
 			PetAppSearchWindow.setVisible(true);
 			dispose();
 		}
 		else if(ActionCmd.equals("신청 내역 확인")) {
-			PetAppListUI PetAppListWindow = new PetAppListUI(ID);
+			PetAppListUI PetAppListWindow = new PetAppListUI();
 			PetAppListWindow.setVisible(true);
 			dispose();
 		}
 		else if(ActionCmd.equals("로그아웃")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 로그아웃 하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 로그아웃 수락
+				LoginUI LoginWindow = new LoginUI();
+		    	LoginWindow.setVisible(true);
 				dispose();
 			}
 		}

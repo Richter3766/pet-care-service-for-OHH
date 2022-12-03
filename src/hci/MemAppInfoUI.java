@@ -1,7 +1,6 @@
 package hci;
 
 import pd.application.Application;
-import pd.systemuser.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +49,8 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 
 	DecimalFormat formatter = new DecimalFormat("###,###");
 	Color c;
+	String name = "박태정";
+	String Location = "경북대학교 IT 대학";
 	String price = "15,000원";
 	int curPrice = 15000;
 	int[] priceSet = new int[3];
@@ -91,10 +92,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 	protected JComboBox<String> StartAMPMCombo;
 	protected JComboBox<String> EndAMPMCombo;
 	
-	Member theMember;
-	String ID;
-	
-	public MemAppInfoUI(String ID) {
+	public MemAppInfoUI() {
 		super("MemAppInfoUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +102,6 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		
 		getContentPane().setBackground(Color.WHITE);
 		
-		theMember = Member.getMember(ID);
 		
 		// 제목 항목
 		JLabel TitleLabel = new JLabel("신청 정보 입력");
@@ -133,7 +130,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		NameLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
 		// 이름 텍스트필드 생성 & 테두리 없애기
-		NameField = new JTextField(theMember.getName()){
+		NameField = new JTextField(name){
             @Override
             public void setBorder(Border border) {
                 
@@ -275,7 +272,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		LocationLabel.setBounds(30,LocationY,40,30);
 		LocationLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
-		LocationField = new JTextField(theMember.getAddress()){
+		LocationField = new JTextField(Location){
             @Override
             public void setBorder(Border border) {
                 
@@ -400,13 +397,12 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		SubmitButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		SubmitButton.addActionListener(this);
 		
-		this.ID = ID;
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			MemberUI MemberWindow = new MemberUI(ID);
+			MemberUI MemberWindow = new MemberUI();
 			MemberWindow.setVisible(true);
 			dispose();
 		}
@@ -456,7 +452,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 				application.setPrice(PriceField.getText());
 
 				// 회원 아이디를 얻는 법 필요
-				application.setApplicationID(theMember.getUserID());
+				application.setApplicationID("임시 ID");
 
 				// 중복 여부 확인(ID)
 				redundantAppInAccept = application.requestIsRedundantInAccept(application.getUserID());
@@ -484,7 +480,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 					application.requestApplication();
 					ConfirmUI.showMessageDialog(this,"신청이 완료되었습니다","신청 완료");
 				}
-				MemberUI MemberWindow = new MemberUI(ID);
+				MemberUI MemberWindow = new MemberUI();
 				MemberWindow.setVisible(true);
 				dispose();
 			}

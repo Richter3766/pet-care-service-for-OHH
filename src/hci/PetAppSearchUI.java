@@ -2,7 +2,6 @@ package hci;
 
 import pd.application.Application;
 import pd.application.ApplicationList;
-import pd.systemuser.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,10 +59,8 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 	RoundedButton LookupButton;
 	ApplicationList list;
 	ArrayList<String> KeyList;
-	String ID;
-	PetSitter thePetSitter;
 	
-	public PetAppSearchUI(String ID) {
+	public PetAppSearchUI() {
 		super("PetAppSearchUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,8 +69,6 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		setResizable(false);
 		
 		getContentPane().setBackground(Color.WHITE);
-		
-		thePetSitter = PetSitter.getPetSitter(ID);
 		
 		//제목 항목
 		JLabel TitleLabel = new JLabel("신청 내역");
@@ -183,19 +178,17 @@ public class PetAppSearchUI extends JFrame implements ActionListener, MouseListe
 		LookupButton.setVisible(false);
 		LookupButton.addActionListener(this);
 		
-		this.ID = ID;
-		
 	}
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			PetSitterUI PetSitterWindow = new PetSitterUI(ID);
+			PetSitterUI PetSitterWindow = new PetSitterUI();
 			PetSitterWindow.setVisible(true);
 			dispose();
 		}
 		else if(ActionCmd.equals("조회")) {
 			String applicationID = (String)AppTable.getValueAt(SelectedRow, 3); // Key(신청 ID) 얻어오기
-			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI(ID,applicationID); // 상세정보 창 열기
+			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI(applicationID); // 상세정보 창 열기
 			PetAppDetailWindow.setVisible(true);
 			dispose();
 		}
