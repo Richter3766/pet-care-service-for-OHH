@@ -120,16 +120,14 @@ public class Application implements Serializable{
 
     /**
      * 수락 대기 상태에 있는 중복 정보가 있는지 찾아 반환한다.
-     * @param userID 중복확인할 사용자 ID
      */
-    public String requestIsRedundantInAccept(String userID){
-        return list.isExistInForAccept(userID);
+    public String requestIsRedundantInAccept(){
+        return list.isExistInForAccept(this.getUserID());
     }
     /**
      * 결제 대기 상태에 있는 중복 정보가 있는지 찾아 반환한다.
-     * @param userID 중복확인할 사용자 ID
      */
-    public String requestIsRedundantInPayment(String userID){
-        return list.isExistInForPayment(userID);
+    public String requestIsRedundantInPayment(){
+        return list.isExistInForPayment(this.getUserID());
     }
 }

@@ -461,8 +461,8 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 				application.setApplicationID(theMember.getUserID());
 
 				// 중복 여부 확인(ID)
-				redundantAppInAccept = application.requestIsRedundantInAccept(application.getUserID());
-				redundantAppInPayment = application.requestIsRedundantInPayment(application.getUserID());
+				redundantAppInAccept = application.requestIsRedundantInAccept();
+				redundantAppInPayment = application.requestIsRedundantInPayment();
 				int doYouReplace = 0;		// 대체 여부를 확인하기 위한 변수
 				// 중복일 경우
 				if(redundantAppInAccept != null || redundantAppInPayment != null){
