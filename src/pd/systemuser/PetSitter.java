@@ -8,9 +8,10 @@ import db.PetSitterTable;
 public class PetSitter extends SystemUser{
 	//static 으로 선언된 petsittertable
 	private static Hashtable<String, PetSitter> petsittertable =
-    		PetSitterTable.getInstance().getHashTable();
-    private String[] certificate;             // 소지 자격증
-    private int numOfCertificate;             // 자격증 수
+    		PetSitterTable.getInstance().getHashTable();             
+    private int numOfCertificate;                                 // 자격증 수
+    private String[] certificate = new String[5];  // 소지 자격증
+    
     
     // init
     public PetSitter(String name, String birth, int age, String address, String cellPhoneContact, String email,
@@ -39,7 +40,7 @@ public class PetSitter extends SystemUser{
     
     //static인 petsittertable을 이용하는 함수들
     //userID로 멤버를 찾아서 반환
-    public PetSitter getPetSitter(String UserID) {
+    public static PetSitter getPetSitter(String UserID) {
     	return petsittertable.get(UserID);
 
     }
