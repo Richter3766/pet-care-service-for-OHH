@@ -48,7 +48,6 @@ public class MemberDM {
 			this.write.writeObject(a);
 		} catch (IOException e) {
 			System.out.println("file write false");
-			e.printStackTrace();
 		}
 	}
 	public Hashtable<String, Member> readObjectData() {
@@ -56,9 +55,9 @@ public class MemberDM {
 			Hashtable<String, Member> temp = (Hashtable<String, Member>)read.readObject();
 			return temp;
 		} catch (ClassNotFoundException e) {
-			System.out.println("file read false");
+//			System.out.println("file read false");
 		} catch (IOException e) {
-			System.out.println("file read false");
+//			System.out.println("file read false");
 		}
 		return null;
 	}

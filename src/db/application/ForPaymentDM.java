@@ -47,7 +47,6 @@ public class ForPaymentDM {
 			this.write.writeObject(a);
 		} catch (IOException e) {
 			System.out.println("file write false");
-			e.printStackTrace();
 		}
 	}
 	public Hashtable<String, Application> readObjectData() {
@@ -55,11 +54,9 @@ public class ForPaymentDM {
 			Hashtable<String, Application> temp = (Hashtable<String, Application>)read.readObject();
 			return temp;
 		} catch (ClassNotFoundException e) {
-			System.out.println("file read false");
-			e.printStackTrace();
+//			System.out.println("file read false");
 		} catch (IOException e) {
-			System.out.println("file read false");
-//			e.printStackTrace();
+//			System.out.println("file read false");
 		}
 		return null;
 	}
