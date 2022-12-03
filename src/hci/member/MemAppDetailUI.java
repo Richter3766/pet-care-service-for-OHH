@@ -4,6 +4,7 @@ import hci.utility.ConfirmUI;
 import hci.utility.RoundedButton;
 import pd.application.Application;
 import pd.application.ApplicationList;
+import pd.systemuser.PetSitter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +44,8 @@ public class MemAppDetailUI extends JFrame implements ActionListener{
 	Application application;
 	
 	String applicationID;
+	String PetSitID;
+	PetSitter thePetSitter;
 	int TableCheck = -1; // 테이블 확인용 변수
 	
 	public MemAppDetailUI(String applicationID) {
@@ -85,16 +88,25 @@ public class MemAppDetailUI extends JFrame implements ActionListener{
 			dispose();
 		}
 		
-		// 회원 이름
-		JLabel MemberNameTitleLabel = new JLabel("돌봄이 이름 ");
-		add(MemberNameTitleLabel);
-		MemberNameTitleLabel.setBounds(20,200,200,30);
-		MemberNameTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		String PetSitName;
+		PetSitID = application.getPetSitterID();
+		if(PetSitID == null) {
+			PetSitName = "";
+		}else {
+			thePetSitter = PetSitter.getPetSitter(PetSitID);
+			PetSitName = thePetSitter.getName();
+		}
+		
+		// 돌봄이 이름
+		JLabel PetSitterNameTitleLabel = new JLabel("돌봄이 이름 ");
+		add(PetSitterNameTitleLabel);
+		PetSitterNameTitleLabel.setBounds(20,200,200,30);
+		PetSitterNameTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
-		JLabel MemberNameContentLabel = new JLabel(""); // <- 회원 이름 넣으면 됩니다
-		add(MemberNameContentLabel);
-		MemberNameContentLabel.setBounds(200,200,600,30);
-		MemberNameContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		JLabel PetSitterNameContentLabel = new JLabel(PetSitName); // <- 돌봄이 이름 넣으면 됩니다
+		add(PetSitterNameContentLabel);
+		PetSitterNameContentLabel.setBounds(200,200,600,30);
+		PetSitterNameContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
 		// 이용 시간
 		JLabel periodOfServiceTitleLabel = new JLabel("이용 시간 ");
@@ -172,7 +184,7 @@ public class MemAppDetailUI extends JFrame implements ActionListener{
 		if(ActionCmd.equals("뒤로가기")) {
 			dispose();
 		}else if(ActionCmd.equals("돌봄이 정보 보기")) {
-			MemAppDetailForPetSitterUI MemAppDetailForPetSitterWindow =  new MemAppDetailForPetSitterUI();
+			MemAppDetailForPetSitterUI MemAppDetailForPetSitterWindow =  new MemAppDetailForPetSitterUI(PetSitID);
 			MemAppDetailForPetSitterWindow.setVisible(true);
 		}
 		else {

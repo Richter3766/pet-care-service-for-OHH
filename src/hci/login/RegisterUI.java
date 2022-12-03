@@ -348,6 +348,7 @@ public class RegisterUI extends JFrame implements ActionListener  {
 		PasswordField.setBounds(140, PasswordY, 120, 30);
 		PasswordField.setBackground(Color.LIGHT_GRAY);
 		PasswordField.setForeground(Color.BLACK);
+		PasswordField.setVisible(false);
 		PasswordField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
 		// 회원 출입방법 항목 (페이지 2)
@@ -488,6 +489,7 @@ public class RegisterUI extends JFrame implements ActionListener  {
 			PreviouspageButton.setVisible(true);
 			LoginIDCheckButton.setVisible(true);
 			SubmitButton.setVisible(true);
+			PasswordField.setVisible(true);
 		}else if(ActionCmd.equals("이전 페이지")) {
 			ContentPanel2.setVisible(false);
 			ContentPanel1.setVisible(true);
@@ -495,6 +497,7 @@ public class RegisterUI extends JFrame implements ActionListener  {
 			NextpageButton.setVisible(true);
 			SubmitButton.setVisible(false);
 			LoginIDCheckButton.setVisible(false);
+			PasswordField.setVisible(false);
 		}else if(ActionCmd.equals("ID 중복확인")) {
 			String ID = LoginIDField.getText();
 			if(ID == null) {
