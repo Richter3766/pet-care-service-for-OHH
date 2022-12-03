@@ -150,6 +150,8 @@ public class LoginUI extends JFrame implements ActionListener {
 		else if(ActionCmd.equals("종료하기")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 종료하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 종료하기 선택 (Yes = 0 / No = 1)
+				MemberTable.getInstance().saveHashTable();
+				PetSitterTable.getInstance().saveHashTable();
 				ForAcceptTable.getInstance().saveHashTable();
 				ForPaymentTable.getInstance().saveHashTable();
 				ActiveTable.getInstance().saveHashTable();
