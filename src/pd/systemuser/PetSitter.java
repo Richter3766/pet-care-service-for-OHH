@@ -2,7 +2,7 @@ package pd.systemuser;
 
 import java.util.Hashtable;
 
-import db.PetSitterTable;
+import db.petsitter.PetSitterTable;
 
 @SuppressWarnings("serial")
 public class PetSitter extends SystemUser{

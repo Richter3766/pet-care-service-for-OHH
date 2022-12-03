@@ -3,7 +3,7 @@ package pd.systemuser;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import db.MemberTable;
+import db.member.MemberTable;
 
 @SuppressWarnings("serial")
 public class Member extends SystemUser{

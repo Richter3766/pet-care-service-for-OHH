@@ -1,9 +1,11 @@
 package pd.application;
 
 import java.util.Hashtable;
-import java.util.ArrayList;
 
-import db.*;
+import db.application.ActiveTable;
+import db.application.CompleteTable;
+import db.application.ForAcceptTable;
+import db.application.ForPaymentTable;
 
 public final class ApplicationList {
     private static ApplicationList list = new ApplicationList();
