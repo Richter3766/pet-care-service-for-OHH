@@ -1,61 +1,24 @@
 package pd.payment;
 
-import pd.application.Application;
-import pd.application.ApplicationList;
-
 public class Payment {
-    private String account;
-    private String accountPassword;
-    private String valid;
+    private String cardnum;
+    private String password;
+    private String cvc;
     private String birth;
 
-    ApplicationList list = ApplicationList.getList();
-    Application application;
-    
-    public Payment() {
-    	
+    public Payment(String cardnum, String password, String valid, String birth) {
+    	this.cardnum = cardnum;
+    	this.password = password;
+    	this.cvc = valid;
+    	this.birth = birth;
     }
     
-    public Payment(String account, String accountPassword, String valid, String birth) {
-    	setAccount(account);
-    	setAccountPassword(accountPassword);
-    	setValid(valid);
-    	setBirth(birth);
-    }
-    
-    public void Pay(String applicationID) {
-    	list.moveForActive(applicationID);
-    }
-    
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public void setAccountPassword(String accountPassword) {
-        this.accountPassword = accountPassword;
-    }
-
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
-
-    public void setValid(String valid) {
-        this.valid = valid;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public String getAccountPassword() {
-        return accountPassword;
-    }
-
-    public String getBirth() {
-        return birth;
-    }
-
-    public String getValid() {
-        return valid;
+    public static boolean CheckValid(Payment payment) {
+    	if(payment.cardnum.length() == 15 || payment.cardnum.length() == 16)
+    		if(payment.password.length() == 4)
+    			if(payment.cvc.length() == 3)
+    				if(payment.birth.length() == 4)
+    					return true;
+    	return false;
     }
 }

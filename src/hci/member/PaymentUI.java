@@ -38,9 +38,9 @@ public class PaymentUI extends JFrame implements ActionListener{
 	
 	Color c;
 	
-	private String account;
-    private String accountPassword;
-    private String valid;
+	private String cardnum;
+    private String password;
+    private String cvc;
     private String birth;
 	
 	// 버튼 이미지 & 크기 변환
@@ -206,8 +206,8 @@ public class PaymentUI extends JFrame implements ActionListener{
 		}else if(ActionCmd.equals("제출")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"결제하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0) { // 제출
-				account = AccountField.getText();
-				accountPassword = "";
+				cardnum = AccountField.getText();
+				password = "";
 				//AccountPasswordField에서 패스워드를 얻어옴, char[] 배열에 저장
 				char[] secret_pw = AccountPasswordField.getPassword(); 
 
@@ -215,25 +215,31 @@ public class PaymentUI extends JFrame implements ActionListener{
 				for(char cha : secret_pw){         
 					Character.toString(cha);       //cha 에 저장된 값 string으로 변환
 					//Password 에 저장하기, Password 에 값이 비어있으면 저장, 값이 있으면 이어서 저장하는 삼항연산자
-					accountPassword += (accountPassword.equals("")) ? ""+cha+"" : ""+cha+"";   
+					password += (password.equals("")) ? ""+cha+"" : ""+cha+"";   
 					}
-				valid = ValidField.getText();
+				cvc = ValidField.getText();
 				birth = BirthField.getText();
-				if(account.equals("")) 
+				if(cardnum.equals("")) 
 					ConfirmUI.showMessageDialog(this, "계좌번호를 입력해주세요.", "결제 실패");
-				else if(accountPassword.equals("")) 
+				else if(password.equals("")) 
 					ConfirmUI.showMessageDialog(this, "계좌 비밀번호을 입력해주세요.", "결제 실패");
-				else if(valid.equals("")) 
+				else if(cvc.equals("")) 
 					ConfirmUI.showMessageDialog(this, "유효기간을 입력해주세요.", "결제 실패");
 				else if(birth.equals("")) 
-					ConfirmUI.showMessageDialog(this, "주민번호 앞자리를 입력해주세요.", "결제 실패");
+					ConfirmUI.showMessageDialog(this, "생년월일을 입력해주세요.", "결제 실패");
 				else {
-					thePay = new Payment(account,accountPassword,valid,birth);
-					thePay.Pay(applicationID);
-					ConfirmUI.showMessageDialog(this,"결제가 완료되었습니다.","확인 메세지");
-					MemAppListUI MemAppListWindow = new MemAppListUI(ID);
-					MemAppListWindow.setVisible(true);
-					dispose();
+					thePay = new Payment(cardnum, password, cvc, birth);
+					if(Payment.CheckValid(thePay) == true) {
+						list.moveForActive(applicationID);
+						ConfirmUI.showMessageDialog(this,"결제가 완료되었습니다.","확인 메세지");
+						MemAppListUI MemAppListWindow = new MemAppListUI(ID);
+						MemAppListWindow.setVisible(true);
+						dispose();
+					}
+					else {
+						thePay = null;
+						ConfirmUI.showMessageDialog(this,"결제가 실패하었습니다.","확인 메세지");
+					}
 				}
 			}
 		}

@@ -1,6 +1,8 @@
 package pd.systemuser;
 
-public class Pet {
+import java.io.Serializable;
+
+public class Pet implements Serializable{
     private String petName;                 // 이름
     private int petAge;                     // 나이
     private String petKind;                 // 종류

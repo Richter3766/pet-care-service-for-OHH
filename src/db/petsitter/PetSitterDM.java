@@ -47,7 +47,6 @@ public class PetSitterDM {
 			this.write.writeObject(a);
 		} catch (IOException e) {
 			System.out.println("file write false");
-			e.printStackTrace();
 		}
 	}
 	
@@ -57,9 +56,9 @@ public class PetSitterDM {
 			Hashtable<String, PetSitter> temp = (Hashtable<String, PetSitter>)read.readObject();
 			return temp;
 		} catch (ClassNotFoundException e) {
-			System.out.print("file read false");
+//			System.out.print("file read false");
 		} catch (IOException e) {
-			System.out.print("file read false");
+//			System.out.print("file read false");
 		}
 		return null;
 	}
