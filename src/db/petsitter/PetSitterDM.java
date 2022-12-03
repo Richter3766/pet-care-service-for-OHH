@@ -50,6 +50,8 @@ public class PetSitterDM {
 			e.printStackTrace();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
 	public Hashtable<String, PetSitter> readObjectData() {
 		try {
 			Hashtable<String, PetSitter> temp = (Hashtable<String, PetSitter>)read.readObject();
