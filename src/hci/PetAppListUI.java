@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 import pd.application.Application;
 import pd.application.ApplicationList;
+import pd.systemuser.*;
 
 @SuppressWarnings("serial")
 public class PetAppListUI extends JFrame implements ActionListener, MouseListener{
@@ -46,7 +47,10 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 	
 	RoundedButton AppCancelButton;
 	RoundedButton LookupButton;
-	public PetAppListUI() {
+	
+	String ID;
+	PetSitter thePetSitter;
+	public PetAppListUI(String ID) {
 		super("PetAppListUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,6 +59,7 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		setResizable(false);
 		
 		getContentPane().setBackground(Color.WHITE);
+		
 		
 		//제목 항목
 		JLabel TitleLabel = new JLabel("신청 내역");
@@ -119,9 +124,9 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		list = ApplicationList.getList();
 		Application application;
 		for(String key: list.getForPaymentTable().keySet()){
-			String temp = key.split("-")[0];
-			if(temp.compareTo("임시 ID") == 0){
-				application = list.getForPaymentTable().get(key);
+			application = list.getForPaymentTable().get(key);
+			if(application == null) break;
+			if(application.getPetSitterID().equals(ID)){
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
 				data[1] = application.getPeriodOfService();
@@ -130,9 +135,9 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 			}
 		}
 		for(String key: list.getForActiveTable().keySet()){
-			String temp = key.split("-")[0];
-			if(temp.compareTo("임시 ID") == 0){
-				application = list.getForActiveTable().get(key);
+			application = list.getForActiveTable().get(key);
+			if(application == null) break;
+			if(application.getPetSitterID().equals(ID)){	
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
 				data[1] = application.getPeriodOfService();
@@ -141,9 +146,9 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 			}
 		}
 		for(String key: list.getForCompleteTable().keySet()){
-			String temp = key.split("-")[0];
-			if(temp.compareTo("임시 ID") == 0){
-				application = list.getForCompleteTable().get(key);
+			application = list.getForCompleteTable().get(key);
+			if(application == null) break;
+			if(application.getPetSitterID().equals(ID)){
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
 				data[1] = application.getPeriodOfService();
@@ -192,11 +197,13 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 		LookupButton.setVisible(false);
 		LookupButton.addActionListener(this);
 		
+		this.ID = ID;
+		
 	}
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			PetSitterUI PetSitterWindow = new PetSitterUI();
+			PetSitterUI PetSitterWindow = new PetSitterUI(ID);
 			PetSitterWindow.setVisible(true);
 			dispose();
 		}
@@ -214,7 +221,7 @@ public class PetAppListUI extends JFrame implements ActionListener, MouseListene
 			}
 		}else if(ActionCmd.equals("조회")) {
 			String applicationID = (String)AppTable.getValueAt(SelectedRow, 0); // Key(신청 ID) 얻어오기
-			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI(applicationID); // 상세정보 창 열기
+			PetAppDetailUI PetAppDetailWindow = new PetAppDetailUI(ID,applicationID); // 상세정보 창 열기
 			PetAppDetailWindow.setVisible(true);
 			dispose();
 		}
