@@ -7,8 +7,9 @@ public class Application implements Serializable{
     private String periodOfService;             // 이용 시간
     private String location;                    // 위치
     private String kindOfServices;              // 신청 서비스 종류
-    private String price;                          // 가격
+    private String price;                       // 가격
     private String state;                       // 진행 상황
+
     static private int idIdx;                   // 신청 ID 생성을 위한 int 변수, 1씩 증가함
     private String petSitterID;					// 돌봄이의 정보를 열람하려면 회원에게 돌봄이 ID를 전달해야하는데 그 경로로 신청정보가 적합할 것 같아 돌봄이 ID 변수 추가
     String[] stateList = {"수락 대기", "결제 대기", "진행중", "완료"};
@@ -88,13 +89,12 @@ public class Application implements Serializable{
     public String[] getReview() {
     	return review;
     }
+
     /**
      * 신청 정보를 신청 목록에 등록한다
-     * 1. 신청 목록에 중복된 정보가 있으면 중복된 신청 ID 반환
-     * 2. 아니면 신청 목록에 신청 정보를 등록한다
      */
     public void requestApplication(){
-        this.setState(0);
+        this.setState(0);                   // '수락 대기'
         list.addForAccept(this);
     }
 

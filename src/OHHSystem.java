@@ -1,4 +1,4 @@
-import hci.*;
+import hci.login.LoginUI;
 
 public class OHHSystem {
     public static void main(String[] args) {
