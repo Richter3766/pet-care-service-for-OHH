@@ -21,7 +21,6 @@ import javax.swing.border.Border;
 import hci.utility.ConfirmUI;
 import hci.utility.RoundedButton;
 import pd.systemuser.Pet;
-import pd.systemuser.PetSitter;
 
 /*
  * 회원가입할 대상을 고르는 창
