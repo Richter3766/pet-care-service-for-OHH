@@ -103,7 +103,7 @@ public class PaymentUI extends JFrame implements ActionListener{
 		add(PriceLabel);
 		PriceLabel.setBounds(350, 230, 200, 70);
 		
-		JLabel AccountLabel = new JLabel("계좌번호 ");
+		JLabel AccountLabel = new JLabel("카드번호 ");
 		add(AccountLabel);
 		AccountLabel.setBounds(30,AccountY,70,30);
 		AccountLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -120,7 +120,7 @@ public class PaymentUI extends JFrame implements ActionListener{
 		AccountField.setForeground(Color.BLACK);
 		AccountField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
-		JLabel AccountPasswordLabel = new JLabel("계좌 비밀번호 ");
+		JLabel AccountPasswordLabel = new JLabel("비밀번호 ");
 		add(AccountPasswordLabel);
 		AccountPasswordLabel.setBounds(30,AccountPasswordY,100,30);
 		AccountPasswordLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -137,7 +137,7 @@ public class PaymentUI extends JFrame implements ActionListener{
 		AccountPasswordField.setForeground(Color.BLACK);
 		AccountPasswordField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
-		JLabel ValidLabel = new JLabel("유효기간 ");
+		JLabel ValidLabel = new JLabel("cvc ");
 		add(ValidLabel);
 		ValidLabel.setBounds(30,ValidY,70,30);
 		ValidLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -154,7 +154,7 @@ public class PaymentUI extends JFrame implements ActionListener{
 		ValidField.setForeground(Color.BLACK);
 		ValidField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
-		JLabel BirthLabel = new JLabel("주민번호 앞자리");
+		JLabel BirthLabel = new JLabel("생년월일");
 		add(BirthLabel);
 		BirthLabel.setBounds(30,BirthY,150,30);
 		BirthLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -220,11 +220,11 @@ public class PaymentUI extends JFrame implements ActionListener{
 				cvc = ValidField.getText();
 				birth = BirthField.getText();
 				if(cardnum.equals("")) 
-					ConfirmUI.showMessageDialog(this, "계좌번호를 입력해주세요.", "결제 실패");
+					ConfirmUI.showMessageDialog(this, "카드번호를 입력해주세요.", "결제 실패");
 				else if(password.equals("")) 
-					ConfirmUI.showMessageDialog(this, "계좌 비밀번호을 입력해주세요.", "결제 실패");
+					ConfirmUI.showMessageDialog(this, "비밀번호을 입력해주세요.", "결제 실패");
 				else if(cvc.equals("")) 
-					ConfirmUI.showMessageDialog(this, "유효기간을 입력해주세요.", "결제 실패");
+					ConfirmUI.showMessageDialog(this, "cvc 번호를 입력해주세요.", "결제 실패");
 				else if(birth.equals("")) 
 					ConfirmUI.showMessageDialog(this, "생년월일을 입력해주세요.", "결제 실패");
 				else {
