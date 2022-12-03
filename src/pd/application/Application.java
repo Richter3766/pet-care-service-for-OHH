@@ -10,12 +10,13 @@ public class Application implements Serializable{
     private String price;                       // 가격
     private String state;                       // 진행 상황
     private String[] review = {"", "", ""};     // 리뷰 정보
-    
+
+    private static final ApplicationList list = ApplicationList.getList(); // 신청 목록과 관계를 가짐
     
     static private int idIdx;                   // 신청 ID 생성을 위한 int 변수, 1씩 증가함
     private String petSitterID;					// 돌봄이의 정보를 열람하려면 회원에게 돌봄이 ID를 전달해야하는데 그 경로로 신청정보가 적합할 것 같아 돌봄이 ID 변수 추가
     String[] stateList = {"수락 대기", "결제 대기", "진행중", "완료"};
-    private static final ApplicationList list = ApplicationList.getList();
+
     // review 추가
   
 	
@@ -28,12 +29,8 @@ public class Application implements Serializable{
         this.state = stateList[0];
 
     }
-    // setter
 
-    /**
-     * applicationID 는 "userId-idIdx" 의 형태를 가진다
-     * @param userId 사용자 ID
-     */
+    // setter
     public void setApplicationID(String userId) {
         this.applicationID = userId + "-"+ idIdx++;
     }
@@ -55,15 +52,13 @@ public class Application implements Serializable{
     public void setPetSitterID(String petSitterID) {
 		this.petSitterID = petSitterID;
 	}
-    // 리뷰신청
     public void setReview(String score, String title, String content) {
     	this.review[0] = score;
     	this.review[1] = title;
     	this.review[2] = content;
     }
 
-// getter
-
+    // getter
     public String getApplicationID() {
         return applicationID;
     }
