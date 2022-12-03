@@ -275,7 +275,7 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 				dispose();
 			}
 		}else if(ActionCmd.equals("반려동물 정보 보기")) {
-			PetAppDetailForPetUI PetAppDetailForPetWindow = new PetAppDetailForPetUI(applicationID);
+			PetAppDetailForPetUI PetAppDetailForPetWindow = new PetAppDetailForPetUI(theMember);
 			PetAppDetailForPetWindow.setVisible(true);
 		}
 		else {

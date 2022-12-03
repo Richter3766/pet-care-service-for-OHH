@@ -26,17 +26,19 @@ import javax.swing.JComboBox;
 public class RegisterUI extends JFrame implements ActionListener  {
 
 	final static int nameY = 40; 						// 이름 항목의 Y축 좌표
-	final static int BirthY = 100; 						// 시작 시간 항목의 Y축 좌표
-	final static int AgeY = 160; 						// 종료 시간 항목의 Y축 좌표
-	final static int AddressY = 220; 					// 위치 항목의 Y축 좌표
-	final static int CellPhoneContactY = 280; 		  	// 서비스 종류 항목의 Y축 좌표 1
-	final static int EmailY = 340; 						// 서비스 종류 항목의 Y축 좌표 2
+	final static int BirthY = 100; 						// 생일 항목의 Y축 좌표
+	final static int AgeY = 160; 						// 나이 항목의 Y축 좌표
+	final static int AddressY = 220; 					// 주소 항목의 Y축 좌표
+	final static int CellPhoneContactY = 280; 		  	// 연락처 항목의 Y축 좌표 
+	final static int EmailY = 340; 						// 이메일 항목의 Y축 좌표
 	
 	final static int loginIDY = 40;						// ID 항목의 Y축 좌표
-	final static int loginIDCheckY = 100;
+	final static int loginIDCheckY = 100;				// ID 중복 체크 항목의 Y축 좌표
 	final static int PasswordY = 160;					// 비밀번호 항목의 Y축 좌표
 	final static int EnterWayY = 220; 					// 출입 방법 항목의 Y축 좌표
 	final static int NumOfPetY = 280; 					// 반려동물 수 항목의 Y축 좌표
+	final static int AddPetInfoY = 340;					// 반려동물 정보 추가 항목의 Y축 좌표
+	final static int AddPetInfoCheckY = 400;			// 반려동물 정보 추가 체크 항목의 Y축 좌표
 	
 	final static int CertificateY = 220;
 	
@@ -57,10 +59,12 @@ public class RegisterUI extends JFrame implements ActionListener  {
 	private String certificate;
 	
 	boolean IDChecked = false;
+	boolean PetAddChecked = false;
 	
 	Member theMember;
 	PetSitter thePetSitter;
-	
+	Pet thePet;
+
 	// 버튼 이미지 & 크기 변환
 	ImageIcon CancelImg1 = new ImageIcon("././Image/CancelButton1.png");
 	ImageIcon CancelImg2 = new ImageIcon("././Image/CancelButton2.png");
@@ -96,11 +100,13 @@ public class RegisterUI extends JFrame implements ActionListener  {
 	protected JTextField CertificateField;
 	
 	protected JLabel LoginIDCheckLabel;
+	protected JLabel AddPetInfoCheckLabel;
 	
 	RoundedButton SubmitButton;
 	RoundedButton PreviouspageButton;
 	RoundedButton NextpageButton;
 	RoundedButton LoginIDCheckButton;
+	RoundedButton AddPetInfoButton;
 	
 	String Role;
 	public RegisterUI(String Role) {
@@ -411,6 +417,25 @@ public class RegisterUI extends JFrame implements ActionListener  {
 		CertificateField.setForeground(Color.BLACK);
 		CertificateField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
+		// 반려동물 정보 추가
+		AddPetInfoButton = new RoundedButton("반려동물 정보 추가");
+		c = new Color(64,126,219);
+		AddPetInfoButton.setBackground(c);
+		AddPetInfoButton.setForeground(Color.WHITE);
+		AddPetInfoButton.setBounds(30, AddPetInfoY, 520, 50);
+		AddPetInfoButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		ContentPanel2.add(AddPetInfoButton);
+		AddPetInfoButton.setVisible(false);
+		AddPetInfoButton.addActionListener(this);
+		
+		// 반려동물 정보 추가 여부
+		AddPetInfoCheckLabel = new JLabel("반려동물 정보 추가 미완료");
+        ContentPanel2.add(AddPetInfoCheckLabel);
+        c = new Color(240,62,62);
+        AddPetInfoCheckLabel.setBounds(30, AddPetInfoCheckY, 200, 30);
+        AddPetInfoCheckLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+        AddPetInfoCheckLabel.setForeground(c);
+	
 		// 구분선
 		JSeparator JSepEnd = new JSeparator();
 		add(JSepEnd);
@@ -463,6 +488,7 @@ public class RegisterUI extends JFrame implements ActionListener  {
 			NumOfPetCombo.setVisible(true);
 			NumOfPetLabel.setVisible(true);
 			EnterWayLabel.setVisible(true);
+			AddPetInfoCheckLabel.setVisible(true);
 			CertificateField.setVisible(false);
 			CertificateLabel.setVisible(false);
 		}else if(Role.equals("PetSitter")) {
@@ -473,6 +499,8 @@ public class RegisterUI extends JFrame implements ActionListener  {
 			NumOfPetCombo.setVisible(false);
 			NumOfPetLabel.setVisible(false);
 			EnterWayLabel.setVisible(false);
+			AddPetInfoButton.setVisible(false);
+			AddPetInfoCheckLabel.setVisible(false);
 		}
 		
 		this.Role = Role;
@@ -490,6 +518,8 @@ public class RegisterUI extends JFrame implements ActionListener  {
 			LoginIDCheckButton.setVisible(true);
 			SubmitButton.setVisible(true);
 			PasswordField.setVisible(true);
+			if(Role.equals("Member"))
+				AddPetInfoButton.setVisible(true);
 		}else if(ActionCmd.equals("이전 페이지")) {
 			ContentPanel2.setVisible(false);
 			ContentPanel1.setVisible(true);
@@ -498,6 +528,7 @@ public class RegisterUI extends JFrame implements ActionListener  {
 			SubmitButton.setVisible(false);
 			LoginIDCheckButton.setVisible(false);
 			PasswordField.setVisible(false);
+			AddPetInfoButton.setVisible(false);
 		}else if(ActionCmd.equals("ID 중복확인")) {
 			String ID = LoginIDField.getText();
 			if(ID == null) {
@@ -542,24 +573,27 @@ public class RegisterUI extends JFrame implements ActionListener  {
 				enterWay = EnterWayField.getText();
 				numOfPet = (int)NumOfPetCombo.getSelectedItem();
 			
-				if(name == "") 
+				if(name.equals("")) 
 					ConfirmUI.showMessageDialog(this, "이름을 입력해주세요.", "가입 실패");
-				else if(birth == "") 
+				else if(birth.equals("")) 
 					ConfirmUI.showMessageDialog(this, "생년월일을 입력해주세요.", "가입 실패");
-				else if(address == "") 
+				else if(address.equals("")) 
 					ConfirmUI.showMessageDialog(this, "주소를 입력해주세요.", "가입 실패");
-				else if(cellPhoneContact == "") 
+				else if(cellPhoneContact.equals("")) 
 					ConfirmUI.showMessageDialog(this, "연락처를 입력해주세요.", "가입 실패");
-				else if(email == "") 
+				else if(email.equals("")) 
 					ConfirmUI.showMessageDialog(this, "이메일을 입력해주세요.", "가입 실패");
 				else if(IDChecked == false)
 					ConfirmUI.showMessageDialog(this, "ID 중복체크를 해주세요.", "가입 실패");
-				else if(password == "") 
+				else if(password.equals("")) 
 					ConfirmUI.showMessageDialog(this, "비밀번호를 입력해주세요.", "가입 실패");
-				else if(enterWay == "") 
+				else if(enterWay.equals("")) 
 					ConfirmUI.showMessageDialog(this, "출입 방법을 입력해주세요.", "가입 실패");
+				else if(PetAddChecked == false)
+					ConfirmUI.showMessageDialog(this, "반려동물 정보 추가를 해주세요.", "가입 실패");
 				else {
 				    theMember = new Member(name,birth,age,address,cellPhoneContact,email,loginID,password,loginID,enterWay,numOfPet);
+				    theMember.addPet(thePet);
 					ConfirmUI.showMessageDialog(this, "회원가입이 완료되었습니다.", "가입 완료");
 					dispose();
 				}
@@ -586,31 +620,38 @@ public class RegisterUI extends JFrame implements ActionListener  {
 					}
 				certificate = CertificateField.getText();
 				
-				if(name == "") 
+				if(name.equals("")) 
 					ConfirmUI.showMessageDialog(this, "이름을 입력해주세요.", "가입 실패");
-				else if(birth == "") 
+				else if(birth.equals("")) 
 					ConfirmUI.showMessageDialog(this, "생년월일을 입력해주세요.", "가입 실패");
-				else if(address == "") 
+				else if(address.equals("")) 
 					ConfirmUI.showMessageDialog(this, "주소를 입력해주세요.", "가입 실패");
-				else if(cellPhoneContact == "") 
+				else if(cellPhoneContact.equals("")) 
 					ConfirmUI.showMessageDialog(this, "연락처를 입력해주세요.", "가입 실패");
-				else if(email == "") 
+				else if(email.equals("")) 
 					ConfirmUI.showMessageDialog(this, "이메일을 입력해주세요.", "가입 실패");
 				else if(IDChecked == false)
 					ConfirmUI.showMessageDialog(this, "ID 중복체크를 해주세요.", "가입 실패");
-				else if(password == "") 
+				else if(password.equals("")) 
 					ConfirmUI.showMessageDialog(this, "비밀번호를 입력해주세요.", "가입 실패");
-				else if(certificate == "") 
+				else if(certificate.equals("")) 
 					ConfirmUI.showMessageDialog(this, "자격증을 입력해주세요.", "가입 실패");
 				else {
 				    thePetSitter = new PetSitter(name,birth,age,address,cellPhoneContact,email,loginID,password,loginID,certificate);
 					ConfirmUI.showMessageDialog(this, "회원가입이 완료되었습니다.", "가입 완료");
 					dispose();
+				}
+			}
+		}else if(ActionCmd.equals("반려동물 정보 추가")) {
+			thePet = RegisterAddPetInfoUI.showDialog(this);
+			if(thePet != null) {
+				PetAddChecked = true;
+				AddPetInfoCheckLabel.setText("반려동물 정보 추가 완료");
+				AddPetInfoCheckLabel.setForeground(Color.BLACK);
 			}
 		}else {
 			System.out.println("Unexpected Error");
 			System.exit(0);
 		}
-	}	
 	}	
 }

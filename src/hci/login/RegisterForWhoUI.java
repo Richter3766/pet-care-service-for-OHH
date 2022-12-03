@@ -27,6 +27,8 @@ public class RegisterForWhoUI extends JDialog implements ActionListener{
 		setLayout(null);
 		setResizable(false);
 
+		getContentPane().setBackground(Color.WHITE);
+		
 		RoundedButton MemberButton = new RoundedButton("회원");
 		add(MemberButton);
 		c = new Color(64,126,219);
