@@ -9,13 +9,15 @@ public class Application implements Serializable{
     private String kindOfServices;              // 신청 서비스 종류
     private String price;                       // 가격
     private String state;                       // 진행 상황
-
+    private String[] review = {"", "", ""};     // 리뷰 정보
+    
+    
     static private int idIdx;                   // 신청 ID 생성을 위한 int 변수, 1씩 증가함
     private String petSitterID;					// 돌봄이의 정보를 열람하려면 회원에게 돌봄이 ID를 전달해야하는데 그 경로로 신청정보가 적합할 것 같아 돌봄이 ID 변수 추가
     String[] stateList = {"수락 대기", "결제 대기", "진행중", "완료"};
     private static final ApplicationList list = ApplicationList.getList();
     // review 추가
-    private String[] review = {"", "", ""};
+  
 	
 	public Application(){
         this.applicationID = "";
