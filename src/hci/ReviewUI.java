@@ -182,8 +182,8 @@ public class ReviewUI extends JFrame implements ActionListener{
 
 				ConfirmUI.showMessageDialog(this, score + title + content + "리뷰가 제출되었습니다","제출 완료");
 				MemberUI MemberWindow = new MemberUI(ID);
-				ConfirmUI.showMessageDialog(null, "리뷰가 제출되었습니다","제출 완료");
-				MemberUI MemberWindow = new MemberUI();
+// 				ConfirmUI.showMessageDialog(null, "리뷰가 제출되었습니다","제출 완료");
+// 				MemberUI MemberWindow = new MemberUI();
 				MemberWindow.setVisible(true);
 				dispose();
 			}
