@@ -8,6 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+/*
+ * 회원가입할 대상을 고르는 창
+ * 회원 / 돌봄이 선택
+ */
+@SuppressWarnings("serial")
 public class RegisterForWhoUI extends JDialog implements ActionListener{
 	
 	Color c;

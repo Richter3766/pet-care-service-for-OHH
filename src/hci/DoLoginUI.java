@@ -13,7 +13,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import pd.systemuser.*;
-
+/*
+ * 로그인을 하는 화면
+ * 아이디와 비밀번호를 입력받는다
+ */
 public class DoLoginUI extends JDialog implements ActionListener {
 
 	Color c;
