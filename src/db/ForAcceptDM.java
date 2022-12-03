@@ -24,7 +24,12 @@ public class ForAcceptDM {
 	public ForAcceptDM(String filePath) {
 		file = new File(filePath);
 		try {
-			this.write = new ObjectOutputStream(new FileOutputStream(filePath));
+			if(!file.exists()) {
+				this.write = new ObjectOutputStream(new FileOutputStream(filePath));
+			}
+			else {
+				this.write = null;
+			}
 			this.read = new ObjectInputStream(new FileInputStream(filePath));
 		} catch (FileNotFoundException e) {
 			System.out.println("stream false");
@@ -36,37 +41,43 @@ public class ForAcceptDM {
 	}
 	public void writeObjectData(Hashtable<String, Application> a) {
 		try {
-			write.writeObject(a);
+			if(this.write == null) {
+				this.write = new ObjectOutputStream(new FileOutputStream(file.getAbsolutePath()));
+			}
+			this.write.writeObject(a);
 		} catch (IOException e) {
 			System.out.println("file write false");
 			e.printStackTrace();
 		}
 	}
 	public Hashtable<String, Application> readObjectData() {
+		Hashtable<String, Application> temp = new Hashtable<String, Application>();
 		try {
-			Hashtable<String, Application> temp = (Hashtable<String, Application>)read.readObject();
+			temp = (Hashtable<String, Application>)this.read.readObject();
 			return temp;
 		} catch (ClassNotFoundException e) {
 			System.out.println("file read false");
-			e.printStackTrace();
+	//		e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("file read false");
 //			e.printStackTrace();
 		}
-		return null;
+		return temp;
 	}
 	public void deletObjectData() {
 		file.delete();
 	}
 	public void close() {
 		try {
-			write.close();
+			if(this.write != null) {
+				this.write.close();
+			}
 		} catch (IOException e) {
 			System.out.println("write close False");
 			e.printStackTrace();
 		}
 		try {
-			read.close();
+			this.read.close();
 		} catch (IOException e) {
 			System.out.println("read close False");
 			e.printStackTrace();

@@ -39,7 +39,7 @@ public class ForPaymentTable
 	}
 	
 	//전달받은 forpaymenthashtable 파일에 저장
-	public void saveHashTable(Hashtable<String, Application> forpaymenthashtable) {
+	public void saveHashTable() {
 		forpaymentDM.deletObjectData();
 		forpaymentDM.writeObjectData(forpaymenthashtable);
 	}

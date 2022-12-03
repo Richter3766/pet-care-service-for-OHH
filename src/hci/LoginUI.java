@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import db.*;
+import pd.application.ApplicationList;
+
 /*	 로그인 화면입니다
  * 
  *  타이틀 화면(추가 예정)
@@ -147,6 +150,10 @@ public class LoginUI extends JFrame implements ActionListener {
 		else if(ActionCmd.equals("종료하기")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 종료하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 종료하기 선택 (Yes = 0 / No = 1)
+				ForAcceptTable.getInstance().saveHashTable();
+				ForPaymentTable.getInstance().saveHashTable();
+				ActiveTable.getInstance().saveHashTable();
+				CompleteTable.getInstance().saveHashTable();
 				System.exit(0);
 			}
 			

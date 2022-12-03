@@ -1,6 +1,8 @@
 package pd.systemuser;
 
-public class SystemUser {
+import java.io.Serializable;
+
+public class SystemUser implements Serializable{
     // 개인 정보
     protected String name;                  // 이름
     protected String birth;                 // 생년월일
