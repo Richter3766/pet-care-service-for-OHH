@@ -2,6 +2,7 @@ package hci;
 
 import pd.application.Application;
 import pd.application.ApplicationList;
+import pd.systemuser.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,7 +62,9 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 	
 	ApplicationList list;
 	
-	public MemAppListUI() {
+	String ID;
+	Member theMember;
+	public MemAppListUI(String ID) {
 		super("MemAppListUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,6 +73,8 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		setResizable(false);
 		
 		getContentPane().setBackground(Color.WHITE);
+		
+		theMember = Member.getMember(ID);
 		
 		//제목 항목
 		JLabel TitleLabel = new JLabel("신청 내역");
@@ -143,7 +148,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		Application application;
 		for(String key: list.getForAcceptTable().keySet()){
 			String temp = key.split("-")[0];
-				if(temp.compareTo("임시 ID") == 0){
+				if(temp.compareTo(theMember.getLoginID()) == 0){
 					 application = list.getForAcceptTable().get(key);
 					 String[] data = new String[3];
 					 data[0] = application.getApplicationID();
@@ -154,7 +159,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		}
 		for(String key: list.getForPaymentTable().keySet()){
 			String temp = key.split("-")[0];
-			if(temp.compareTo("임시 ID") == 0){
+			if(temp.compareTo(theMember.getLoginID()) == 0){
 				application = list.getForPaymentTable().get(key);
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
@@ -165,7 +170,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		}
 		for(String key: list.getForActiveTable().keySet()){
 			String temp = key.split("-")[0];
-			if(temp.compareTo("임시 ID") == 0){
+			if(temp.compareTo(theMember.getLoginID()) == 0){
 				application = list.getForActiveTable().get(key);
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
@@ -176,7 +181,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		}
 		for(String key: list.getForCompleteTable().keySet()){
 			String temp = key.split("-")[0];
-			if(temp.compareTo("임시 ID") == 0){
+			if(temp.compareTo(theMember.getLoginID()) == 0){
 				application = list.getForCompleteTable().get(key);
 				String[] data = new String[3];
 				data[0] = application.getApplicationID();
@@ -242,13 +247,14 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 		LookupButton.setVisible(false);
 		LookupButton.addActionListener(this);
 		
+		this.ID = ID;
 	}
 	
 	
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			MemberUI MemberWindow = new MemberUI();
+			MemberUI MemberWindow = new MemberUI(ID);
 			MemberWindow.setVisible(true);
 			dispose();
 		}
@@ -257,7 +263,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 			if(ans == 0){ // 리뷰 작성 수락
 				// 선택된 신청의  ID를 ReviewUI로 넘겨줌
 				String applicationID = (String) AppTable.getValueAt( SelectedRow, 0);
-				ReviewUI ReviewWindow = new ReviewUI(applicationID);
+				ReviewUI ReviewWindow = new ReviewUI(ID,applicationID);
 				ReviewWindow.setVisible(true);
 				dispose();
 			}
@@ -265,7 +271,7 @@ public class MemAppListUI extends JFrame implements ActionListener, MouseListene
 			int ans = ConfirmUI.showConfirmDialog(this,"결제 창으로 이동하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 결제창 이동
 				String applicationID = (String) AppTable.getValueAt( SelectedRow, 0);
-				PaymentUI PaymentWindow = new PaymentUI(applicationID);
+				PaymentUI PaymentWindow = new PaymentUI(ID,applicationID);
 				PaymentWindow.setVisible(true);
 				dispose();
 			}

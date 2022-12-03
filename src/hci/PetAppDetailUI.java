@@ -2,6 +2,7 @@ package hci;
 
 import pd.application.Application;
 import pd.application.ApplicationList;
+import pd.systemuser.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +32,7 @@ import javax.swing.JSeparator;
 public class PetAppDetailUI extends JFrame implements ActionListener{
 
 	Color c;
+	Member theMember;
 	
 	private final int ACCEPT_TABLE = 0; // 수락 대기 Table
 	private final int PAYMENT_TABLE = 1; // 결제 대기 Table
@@ -52,9 +54,12 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 	Application application;
 	
 	String applicationID;
+	String ID;
+	
+	PetSitter thePetSitter;
 	int TableCheck = -1; // 테이블 확인용 변수
 	
-	public PetAppDetailUI(String applicationID) {
+	public PetAppDetailUI(String ID,String applicationID) {
 		super("PetAppDetailUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -100,7 +105,10 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 		MemberNameTitleLabel.setBounds(20,200,80,30);
 		MemberNameTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
-		JLabel MemberNameContentLabel = new JLabel(""); // <- 회원 이름 넣으면 됩니다
+		String UserID = applicationID.split("-")[0];
+		theMember = Member.getMember(UserID);
+		String UserName = theMember.getName();
+		JLabel MemberNameContentLabel = new JLabel(UserName); // <- 회원 이름 넣으면 됩니다
 		add(MemberNameContentLabel);
 		MemberNameContentLabel.setBounds(200,200,600,30);
 		MemberNameContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -230,16 +238,17 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 		if(TableCheck >= PAYMENT_TABLE) // 반려동물 정보 보기 버튼은 결제 대기부터 활성화된다.
 			PetInfoButton.setVisible(true);
 		
+		this.ID = ID;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
 			if(TableCheck == ACCEPT_TABLE) { // 수락 테이블일 경우 -> 돌봄 서비스 신청 조회일 경우
-				PetAppSearchUI PetAppSearchWindow = new PetAppSearchUI();
+				PetAppSearchUI PetAppSearchWindow = new PetAppSearchUI(ID);
 				PetAppSearchWindow.setVisible(true);
 			}else { // 이외의 경우 -> 신청 내역 확인
-				PetAppListUI PetAppListWindow = new PetAppListUI();
+				PetAppListUI PetAppListWindow = new PetAppListUI(ID);
 				PetAppListWindow.setVisible(true);
 			}
 			dispose();
@@ -248,8 +257,9 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 			int ans = ConfirmUI.showConfirmDialog(this,"신청을 수락하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 신청 수락
 				list.moveForPayment(applicationID); // 신청 상태를 결제 대기 상태로 바꿈. (수락 대기 -> 결제 대기)
+				application.setPetSitterID(ID); // 신청에 돌봄이 ID 추가
 				ConfirmUI.showMessageDialog(this,"신청 수락이 완료되었습니다","신청 수락 완료");
-				PetAppSearchUI PetAppSearchWindow = new PetAppSearchUI();
+				PetAppSearchUI PetAppSearchWindow = new PetAppSearchUI(ID);
 				PetAppSearchWindow.setVisible(true);
 				dispose();
 			}
@@ -258,7 +268,7 @@ public class PetAppDetailUI extends JFrame implements ActionListener{
 			if(ans == 0){ // 서비스 완료
 				list.moveForComplete(applicationID); // 신청 상태를 결제 대기 상태로 바꿈. (수락 대기 -> 결제 대기)
 				ConfirmUI.showMessageDialog(this,"서비스가 완료 상태로 변경되었습니다.","서비스 종료");
-				PetAppListUI PetAppListWindow = new PetAppListUI();
+				PetAppListUI PetAppListWindow = new PetAppListUI(ID);
 				PetAppListWindow.setVisible(true);
 				dispose();
 			}
