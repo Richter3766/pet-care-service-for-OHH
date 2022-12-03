@@ -12,8 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
-import pd.systemuser.*;
-
 /*		회원 화면입니다.
  *	 
  *  대문 글자(안녕하세요! OOO 님)
@@ -32,6 +30,7 @@ import pd.systemuser.*;
 public class MemberUI extends JFrame implements ActionListener{
 	
 	Color c;
+	String name = "박태정";
 	
 	// 버튼 이미지 & 크기 변환
 	ImageIcon logoutImg1 = new ImageIcon("././Image/ExitButton1.png");
@@ -45,10 +44,8 @@ public class MemberUI extends JFrame implements ActionListener{
 	Image changeImg2 = img2.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 	ImageIcon LogOutButtonIcon2 = new ImageIcon(changeImg2);
 	
-	Member theMember;
-	String ID;
 	
-	public MemberUI(String ID) {
+	public MemberUI() {
 		super("MemberUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -57,8 +54,6 @@ public class MemberUI extends JFrame implements ActionListener{
 		setResizable(false);
 		
 		getContentPane().setBackground(Color.WHITE);
-		
-		theMember = Member.getMember(ID);
 		
 		// 대문 글자 (안녕하세요!)
 		JLabel TitleLabel = new JLabel("안녕하세요!");
@@ -69,7 +64,7 @@ public class MemberUI extends JFrame implements ActionListener{
 		TitleLabel.setBounds(30, 50, 500, 70);
 		
 		// 대문 글자의 회원 이름 부분
-		JLabel NameLabel = new JLabel(theMember.getName() + "님");
+		JLabel NameLabel = new JLabel(name + "님");
 		NameLabel.setHorizontalAlignment(JLabel.LEFT);
 		c = new Color(103,155,245);
 		NameLabel.setForeground(Color.BLACK);
@@ -123,7 +118,6 @@ public class MemberUI extends JFrame implements ActionListener{
 		LogoutButton.setFocusPainted(false);
 		LogoutButton.addActionListener(this);
 		
-		this.ID = ID;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -131,19 +125,21 @@ public class MemberUI extends JFrame implements ActionListener{
 		if(ActionCmd.equals("돌봄 서비스 신청하기")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"신청을 생성하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 신청 생성하기
-				MemAppInfoUI AppInfoWindow = new MemAppInfoUI(ID);
+				MemAppInfoUI AppInfoWindow = new MemAppInfoUI();
 				AppInfoWindow.setVisible(true);
 				dispose();
 			}
 		}
 		else if(ActionCmd.equals("신청 내역 확인")) {
-			MemAppListUI AppListWindow = new MemAppListUI(ID);
+			MemAppListUI AppListWindow = new MemAppListUI();
 			AppListWindow.setVisible(true);
 			dispose();
 		}
 		else if(ActionCmd.equals("로그아웃")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 로그아웃 하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 로그아웃 수락
+				LoginUI LoginWindow = new LoginUI();
+		    	LoginWindow.setVisible(true);
 				dispose();
 			}
 		}

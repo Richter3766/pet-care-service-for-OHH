@@ -55,9 +55,8 @@ public class ReviewUI extends JFrame implements ActionListener{
 	
 	// 리뷰를 위한 ID
 	String applicationID;
-	String ID;
 	
-	public ReviewUI(String ID,String applicationID) {
+	public ReviewUI(String applicationID) {
 		super("ReviewUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -151,7 +150,6 @@ public class ReviewUI extends JFrame implements ActionListener{
 		
 		// ID 초기화
 		this.applicationID = applicationID;
-		this.ID = ID;
 		
 		// 작성한 리뷰 보기
 		//
@@ -166,7 +164,7 @@ public class ReviewUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			MemAppListUI MemAppListWindow = new MemAppListUI(ID);
+			MemAppListUI MemAppListWindow = new MemAppListUI();
 			MemAppListWindow.setVisible(true);
 			dispose();
 		}
@@ -179,9 +177,6 @@ public class ReviewUI extends JFrame implements ActionListener{
 				content = ReviewArea.getText();
 				// 신청완료된 신청을 가져온 다음 setReview
 				ApplicationList.getList().getForCompleteTable().get(this.applicationID).setReview(score, title, content);
-
-				ConfirmUI.showMessageDialog(this, score + title + content + "리뷰가 제출되었습니다","제출 완료");
-				MemberUI MemberWindow = new MemberUI(ID);
 				ConfirmUI.showMessageDialog(null, "리뷰가 제출되었습니다","제출 완료");
 				MemberUI MemberWindow = new MemberUI();
 				MemberWindow.setVisible(true);

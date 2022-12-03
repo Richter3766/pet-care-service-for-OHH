@@ -39,10 +39,9 @@ public class PaymentUI extends JFrame implements ActionListener{
 	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
 	String applicationID;
-	String ID;
 	ApplicationList list;
-
-	public PaymentUI(String ID,String applicationID) {
+	
+	public PaymentUI(String applicationID) {
 		super("PaymentUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,13 +88,12 @@ public class PaymentUI extends JFrame implements ActionListener{
 		SubmitButton.addActionListener(this);
 		
 		this.applicationID = applicationID;
-		this.ID = ID;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			MemberUI MemberWindow = new MemberUI(ID);
+			MemberUI MemberWindow = new MemberUI();
 			MemberWindow.setVisible(true);
 			dispose();
 		}else if(ActionCmd.equals("제출")) {
@@ -103,7 +101,7 @@ public class PaymentUI extends JFrame implements ActionListener{
 			if(ans == 0) { // 제출
 			list.moveForActive(applicationID);
 			ConfirmUI.showMessageDialog(this,"결제가 완료되었습니다.","확인 메세지");
-			MemAppListUI MemAppListWindow = new MemAppListUI(ID);
+			MemAppListUI MemAppListWindow = new MemAppListUI();
 			MemAppListWindow.setVisible(true);
 			dispose();
 			}

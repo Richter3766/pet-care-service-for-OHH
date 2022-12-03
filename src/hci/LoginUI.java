@@ -35,10 +35,6 @@ public class LoginUI extends JFrame implements ActionListener {
 	Image changeImg1 = img1.getScaledInstance(350, 350, Image.SCALE_SMOOTH);
 	ImageIcon Logoicon = new ImageIcon(changeImg1);	
 	
-	boolean MemAutoLogin = false;
-	boolean PetAutoLogin = false;
-	String MemID;
-	String PetSitterID;
 	public LoginUI() {
 		
 		super("로그인 화면");
@@ -85,7 +81,7 @@ public class LoginUI extends JFrame implements ActionListener {
 		PetSitterLoginButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		PetSitterLoginButton.addActionListener(this);
 		
-		// 회원가입 버튼
+		// 회원가입 버튼 (더미 버튼)
 		RoundedButton RegisterButton = new RoundedButton("회원가입");
 		add(RegisterButton);
 		c = new Color(107,158,239);
@@ -93,7 +89,6 @@ public class LoginUI extends JFrame implements ActionListener {
 		RegisterButton.setForeground(Color.WHITE); 
 		RegisterButton.setBounds(30, 610, 530, 50); 
 		RegisterButton.setFont(new Font("맑은 고딕", Font.BOLD, 20)); 
-		RegisterButton.addActionListener(this);
 		
 		// 종료 버튼
 		RoundedButton ExitButton = new RoundedButton("종료하기");
@@ -110,42 +105,14 @@ public class LoginUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) { // 버튼 눌렀을 시 이벤트 처리
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("회원 로그인")) {
-			if(!MemAutoLogin) {
-				String[] returnString = DoLoginUI.showLoginDialog(this, "로그인", DoLoginUI.MEMBER);
-				if(returnString != null) {
-					MemID = returnString[0];
-					if(MemID != null) { // 로그인 성공
-						if(returnString[1].equals("AutoLogin"))  // 자동 로그인 여부 확인
-							MemAutoLogin = true;
-					MemberUI MemberWindow = new MemberUI(MemID);
-					MemberWindow.setVisible(true);
-					}
-				}
-			}else {
-				MemberUI MemberWindow = new MemberUI(MemID);
-				MemberWindow.setVisible(true);
-			}
+			MemberUI MemberWindow = new MemberUI();
+			MemberWindow.setVisible(true);
+			dispose();
 		}
 		else if(ActionCmd.equals("돌봄이 로그인")) {
-			if(!PetAutoLogin) {
-				String[] returnString = DoLoginUI.showLoginDialog(this, "로그인", DoLoginUI.PETSITTER);
-				if(returnString != null) {
-					PetSitterID = returnString[0];
-					if(PetSitterID != null) { // 로그인 성공
-						if(returnString[1].equals("AutoLogin"))  // 자동 로그인 여부 확인
-							PetAutoLogin = true;
-					PetSitterUI PetSitterWindow = new PetSitterUI(PetSitterID);
-					PetSitterWindow.setVisible(true);
-					}
-				}
-			}else {
-				PetSitterUI PetSitterWindow = new PetSitterUI(PetSitterID);
-				PetSitterWindow.setVisible(true);
-			}
-		}
-		else if(ActionCmd.equals("회원가입")) {
-			RegisterForWhoUI RegisterForWhoWindow = new RegisterForWhoUI(this);
-			RegisterForWhoWindow.setVisible(true);
+			PetSitterUI PetSitterWindow = new PetSitterUI();
+			PetSitterWindow.setVisible(true);
+			dispose();
 		}
 		else if(ActionCmd.equals("종료하기")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"정말 종료하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
@@ -162,9 +129,7 @@ public class LoginUI extends JFrame implements ActionListener {
 			System.out.println("Unexpected Error");
 			System.exit(0);
 		}
-		
 	}
+	
+	
 }
-	
-	
-

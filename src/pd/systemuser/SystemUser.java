@@ -60,39 +60,7 @@ public class SystemUser implements Serializable{
     }
 
     // getter
-    public String getName() {
-    	return name;
-    }
-    
-    public String getBirth() {
-    	return birth;
-    }
-    
-    public int getAge() {
-    	return age;
-    }
-    
-    public String getAddress() {
-    	return address;
-    }
-    
-    public String getCellPhoneContact() {
-    	return cellPhoneContact;
-    }
-    
-    public String getEmail() {
-    	return email;
-    }
-    
     public String getUserID() {
         return userID;
-    }
-    
-    public String getLoginID() {
-    	return loginID;
-    }
-    
-    public String getPassword() {
-    	return password;
     }
 }
