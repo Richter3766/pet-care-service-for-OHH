@@ -20,7 +20,6 @@ import javax.swing.JSeparator;
 
 @SuppressWarnings("serial")
 public class MemAppDetailUI extends JFrame implements ActionListener{
-
 	
 	Color c;
 	

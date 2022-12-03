@@ -1,6 +1,7 @@
 package hci.petsitter;
 
-import pd.application.ApplicationList;
+import pd.systemuser.Member;
+import pd.systemuser.Pet;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,10 +37,8 @@ public class PetAppDetailForPetUI extends JFrame implements ActionListener{
 	Image changeImg2 = img2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 	ImageIcon CancelButtonIcon2 = new ImageIcon(changeImg2);
 	
-	String applicationID;
-	ApplicationList list;
 	
-	public PetAppDetailForPetUI(String applicationID) {
+	public PetAppDetailForPetUI(Member theMember) {
 		super("PetAppDetailForPetUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -49,6 +48,7 @@ public class PetAppDetailForPetUI extends JFrame implements ActionListener{
 		
 		getContentPane().setBackground(Color.WHITE);
 		
+
 		// 제목 항목
 		JLabel TitleLabel = new JLabel("회원의 반려동물 정보");
 		TitleLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -61,7 +61,67 @@ public class PetAppDetailForPetUI extends JFrame implements ActionListener{
 		add(JSepStart);
 		JSepStart.setBounds(0, 170, 600, 70);
 		
-		list = ApplicationList.getList();
+		Pet thePet = theMember.getPets().get(0);
+		String PetName = thePet.getPetName();
+		Integer PetAge = thePet.getPetAge();
+		String PetKind = thePet.getPetKind();
+		String ChronicDisease = thePet.getChronicDisease();
+		String KindOfFeed = thePet.getKindOfFeed();
+		
+		// 반려동물 이름
+		JLabel NameTitleLabel = new JLabel("이름 ");
+		add(NameTitleLabel);
+		NameTitleLabel.setBounds(20,200,80,30);
+		NameTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		
+		JLabel NameContentLabel = new JLabel(PetName); // <- 회원 이름 넣으면 됩니다
+		add(NameContentLabel);
+		NameContentLabel.setBounds(200,200,600,30);
+		NameContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		
+		// 반려동물 나이
+		JLabel AgeTitleLabel = new JLabel("나이 ");
+		add(AgeTitleLabel);
+		AgeTitleLabel.setBounds(20,280,80,30);
+		AgeTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+
+		JLabel AgeContentLabel = new JLabel(PetAge.toString());
+		add(AgeContentLabel);
+		AgeContentLabel.setBounds(200,280,600,30);
+		AgeContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+
+		// 반려동물 정보
+		JLabel KindTitleLabel = new JLabel("종류 ");
+		add(KindTitleLabel);
+		KindTitleLabel.setBounds(20,360,80,30);
+		KindTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+
+		JLabel KindContentLabel = new JLabel(PetKind);
+		add(KindContentLabel);
+		KindContentLabel.setBounds(200,360,600,30);
+		KindContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+						
+		// 반려동물 지병
+		JLabel ChronicDiseaseTitleLabel = new JLabel("지병 ");
+		add(ChronicDiseaseTitleLabel);
+		ChronicDiseaseTitleLabel.setBounds(20,440,200,30);
+		ChronicDiseaseTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+
+		JLabel ChronicDiseaseContentLabel = new JLabel(ChronicDisease);
+		add(ChronicDiseaseContentLabel);
+		ChronicDiseaseContentLabel.setBounds(200,440,600,30);
+		ChronicDiseaseContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+						
+		// 반려동물 가격
+		JLabel KindOfFeedTitleLabel = new JLabel("가격 ");
+		add(KindOfFeedTitleLabel);
+		KindOfFeedTitleLabel.setBounds(20,520,80,30);
+		KindOfFeedTitleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+
+		JLabel KindOfFeedContentLabel = new JLabel(KindOfFeed);
+		add(KindOfFeedContentLabel);
+		KindOfFeedContentLabel.setBounds(200,520,600,30);
+		KindOfFeedContentLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));		
 		
 		// 뒤로가기 버튼
 		JButton CancelButton = new JButton(CancelButtonIcon1);
@@ -73,8 +133,8 @@ public class PetAppDetailForPetUI extends JFrame implements ActionListener{
 		CancelButton.setContentAreaFilled(false);
 		CancelButton.setFocusPainted(false);
 		CancelButton.addActionListener(this);
+
 		
-		this.applicationID = applicationID;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
