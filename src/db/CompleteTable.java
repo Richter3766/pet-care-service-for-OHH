@@ -38,7 +38,7 @@ public class CompleteTable
    		return completehashtable;
 	}
 	//전달받은 completehashtable 파일에 저장
-	public void saveHashTable(Hashtable<String, Application> completehashtable) {
+	public void saveHashTable() {
 		completeDM.deletObjectData();
 		completeDM.writeObjectData(completehashtable);
 	}

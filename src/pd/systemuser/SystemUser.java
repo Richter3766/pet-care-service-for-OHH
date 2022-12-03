@@ -1,6 +1,8 @@
 package pd.systemuser;
 
-public class SystemUser {
+import java.io.Serializable;
+
+public class SystemUser implements Serializable{
     // 개인 정보
     protected String name;                  // 이름
     protected String birth;                 // 생년월일
@@ -58,39 +60,7 @@ public class SystemUser {
     }
 
     // getter
-    public String getName() {
-    	return name;
-    }
-    
-    public String getBirth() {
-    	return birth;
-    }
-    
-    public int getAge() {
-    	return age;
-    }
-    
-    public String getAddress() {
-    	return address;
-    }
-    
-    public String getCellPhoneContact() {
-    	return cellPhoneContact;
-    }
-    
-    public String getEmail() {
-    	return email;
-    }
-    
     public String getUserID() {
         return userID;
-    }
-    
-    public String getLoginID() {
-    	return loginID;
-    }
-    
-    public String getPassword() {
-    	return password;
     }
 }

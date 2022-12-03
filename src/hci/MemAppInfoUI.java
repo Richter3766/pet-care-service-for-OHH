@@ -1,7 +1,6 @@
 package hci;
 
 import pd.application.Application;
-import pd.systemuser.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +49,8 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 
 	DecimalFormat formatter = new DecimalFormat("###,###");
 	Color c;
+	String name = "박태정";
+	String Location = "경북대학교 IT 대학";
 	String price = "15,000원";
 	int curPrice = 15000;
 	int[] priceSet = new int[3];
@@ -91,10 +92,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 	protected JComboBox<String> StartAMPMCombo;
 	protected JComboBox<String> EndAMPMCombo;
 	
-	Member theMember;
-	String ID;
-	
-	public MemAppInfoUI(String ID) {
+	public MemAppInfoUI() {
 		super("MemAppInfoUI");
 		setSize(600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +102,6 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		
 		getContentPane().setBackground(Color.WHITE);
 		
-		theMember = Member.getMember(ID);
 		
 		// 제목 항목
 		JLabel TitleLabel = new JLabel("신청 정보 입력");
@@ -133,7 +130,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		NameLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
 		// 이름 텍스트필드 생성 & 테두리 없애기
-		NameField = new JTextField(theMember.getName()){
+		NameField = new JTextField(name){
             @Override
             public void setBorder(Border border) {
                 
@@ -275,7 +272,7 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		LocationLabel.setBounds(30,LocationY,40,30);
 		LocationLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
-		LocationField = new JTextField(theMember.getAddress()){
+		LocationField = new JTextField(Location){
             @Override
             public void setBorder(Border border) {
                 
@@ -400,22 +397,21 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 		SubmitButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		SubmitButton.addActionListener(this);
 		
-		this.ID = ID;
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		String ActionCmd = e.getActionCommand();
 		if(ActionCmd.equals("뒤로가기")) {
-			MemberUI MemberWindow = new MemberUI(ID);
+			MemberUI MemberWindow = new MemberUI();
 			MemberWindow.setVisible(true);
 			dispose();
 		}
 		else if(ActionCmd.equals("제출")) {
 			int ans = ConfirmUI.showConfirmDialog(this,"제출하시겠습니까?","확인 메세지",ConfirmUI.YES_NO_OPTION);
 			if(ans == 0){ // 제출 수락
-				Application application = new Application();
-				String redundantAppInAccept;
-				String redundantAppInPayment;
+				Application application = new Application();		// 신청 정보 생성
+				String redundantAppInAccept;						// 중복 여부 확인을 위한 변수1
+				String redundantAppInPayment;						// 중복 여부 확인을 위한 변수2
 				String services = "";
 
 				// 시간 저장
@@ -456,32 +452,35 @@ public class MemAppInfoUI extends JFrame implements ActionListener {
 				application.setPrice(PriceField.getText());
 
 				// 회원 아이디를 얻는 법 필요
-				application.setApplicationID(theMember.getUserID());
+				application.setApplicationID("임시 ID");
 
-				// 중복 정보가 있어 대체해야할 경우
+				// 중복 여부 확인(ID)
 				redundantAppInAccept = application.requestIsRedundantInAccept(application.getUserID());
 				redundantAppInPayment = application.requestIsRedundantInPayment(application.getUserID());
-				int doYouReplace = 0;
+				int doYouReplace = 0;		// 대체 여부를 확인하기 위한 변수
+				// 중복일 경우
 				if(redundantAppInAccept != null || redundantAppInPayment != null){
+					// 신청 대체()?
 					doYouReplace = ConfirmUI.showConfirmDialog(this,
 							"신청이 존재합니다.\n대체하시겠습니까?","확인 메세지",
 							ConfirmUI.YES_NO_OPTION);
-					if(doYouReplace == 0){
+					if(doYouReplace == 0){	// 대체할 경우
+						// delete 신청(ID)
 						application.requestRemoveAccept(redundantAppInAccept);
 						application.requestRemovePayment(redundantAppInPayment);
 					}
-					else{
+					else{					// 대체하지 않을 경우
 						ConfirmUI.showMessageDialog(this,"신청이 취소되었습니다","신청 취소");
 						dispose();
 					}
 				}
 
-				// 신청 완료
+				// 신청 등록()
 				if(doYouReplace == 0){
 					application.requestApplication();
 					ConfirmUI.showMessageDialog(this,"신청이 완료되었습니다","신청 완료");
 				}
-				MemberUI MemberWindow = new MemberUI(ID);
+				MemberUI MemberWindow = new MemberUI();
 				MemberWindow.setVisible(true);
 				dispose();
 			}
