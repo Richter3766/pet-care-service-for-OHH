@@ -138,7 +138,7 @@ public class RegisterAddPetInfoUI extends JDialog implements ActionListener{
 		AgeCombo.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
 		// 반려동물 종류 항목
-		JLabel KindLabel = new JLabel("반려동물 종류 ");
+		JLabel KindLabel = new JLabel("반려동물 종류");
 		ContentPanel.add(KindLabel);
 		KindLabel.setBounds(30,KindY,100,30);
 		KindLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -156,7 +156,7 @@ public class RegisterAddPetInfoUI extends JDialog implements ActionListener{
 		KindField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
 		// 반려동물 지병
-		JLabel ChronicDiseaseLabel = new JLabel("반려동물 지병 ");
+		JLabel ChronicDiseaseLabel = new JLabel("반려동물 지병");
 		ContentPanel.add(ChronicDiseaseLabel);
 		ChronicDiseaseLabel.setBounds(30,ChronicDiseaseY,100,30);
 		ChronicDiseaseLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));

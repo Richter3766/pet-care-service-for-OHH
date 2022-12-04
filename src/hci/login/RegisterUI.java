@@ -261,7 +261,7 @@ public class RegisterUI extends JFrame implements ActionListener  {
 		AddressField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		
 		// 연락처
-		JLabel CellPhoneContactLabel = new JLabel("연락처 ");
+		JLabel CellPhoneContactLabel = new JLabel("연락처");
 		ContentPanel1.add(CellPhoneContactLabel);
 		CellPhoneContactLabel.setBounds(30,CellPhoneContactY,50,30);
 		CellPhoneContactLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
