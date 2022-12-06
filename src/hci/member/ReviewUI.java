@@ -184,7 +184,7 @@ public class ReviewUI extends JFrame implements ActionListener{
 				// 신청완료된 신청을 가져온 다음 setReview
 				ApplicationList.getList().getForCompleteTable().get(this.applicationID).setReview(score, title, content);
 
-				ConfirmUI.showMessageDialog(this, score + title + content + "리뷰가 제출되었습니다","제출 완료");
+				ConfirmUI.showMessageDialog(this, "리뷰가 제출되었습니다","제출 완료");
 				MemberUI MemberWindow = new MemberUI(ID);
 				MemberWindow.setVisible(true);
 				dispose();
